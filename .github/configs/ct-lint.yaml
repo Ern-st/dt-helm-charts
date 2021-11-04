@@ -35,6 +35,7 @@ chart-dirs:
   - charts/tempo-distributed
   - charts/traefik
   - charts/vault
+  - charts/squid
 chart-repos:
   - helmcharts=https://distributed-technologies.github.io/helm-charts/
   - argo=https://argoproj.github.io/argo-helm
