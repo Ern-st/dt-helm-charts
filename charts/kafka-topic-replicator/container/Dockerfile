@@ -9,3 +9,7 @@ COPY app/* /app/
 
 FROM base as production
 CMD ["poetry", "run" "python3", "-u", "/app/kafka-topic-replicator.py"]
+
+FROM base as test
+COPY tests/ /tests/
+CMD ["poetry", "run","python3", "-m", "unittest", "discover", "/tests/" ]
