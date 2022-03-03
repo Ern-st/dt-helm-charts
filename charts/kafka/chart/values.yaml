@@ -18,9 +18,9 @@ cluster:
     config:
       # If a topic does not exist, create it if someone writes to it.
       autoCreateTopicEnable: "false"
-      # Default is 7 days which is more than we need, reducing saves storage.
-      logRetentionHours: 48
-      logRollHours: 24
+      # The following configurations can be set, when not they use the default
+      # logRetentionHours: 168
+      # logRollHours: 168
       # offsetsTopicReplicationFactor: 3
       # transactionStateLogReplicationFactor: 3
       # transactionStateLogMinIsr: 2

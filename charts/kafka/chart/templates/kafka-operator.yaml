@@ -48,8 +48,8 @@ spec:
       inter.broker.protocol.version: {{ .Values.cluster.kafka.version }}
     {{- with .Values.cluster.kafka.config }}
       auto.create.topics.enable: {{ .autoCreateTopicEnable }}
-      log.retention.hours: {{ .logRetentionHours }}
-      log.roll.hours: {{ .logRollHours }}
+      log.retention.hours: {{ default 168 .logRetentionHours }}
+      log.roll.hours: {{ default 168 .logRollHours }}
       offsets.topic.replication.factor: {{ min $.Values.cluster.kafka.replicas (default 3 .offsetsTopicReplicationFactor) }}
       transaction.state.log.replication.factor: {{ min $.Values.cluster.kafka.replicas (default 3 .transactionStateLogReplicationFactor ) }}
       transaction.state.log.min.isr: {{ min $.Values.cluster.kafka.replicas (default 2 .transactionStateLogMinIsr) }}
