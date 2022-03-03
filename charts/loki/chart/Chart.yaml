@@ -2,7 +2,7 @@ apiVersion: v2
 name: loki
 description: A Helm umbrella chart for Loki
 type: application
-version: 1.0.0
+version: 1.0.1
 
 dependencies:
 - name: loki-distributed
