@@ -8,11 +8,12 @@ from kafka import KafkaProducer, KafkaConsumer
 
 # Constants
 MS_TO_SEC_FACTOR=1000
-INPUT_AND_DEFAULT = [
-    ('KAFKA_BROKER_ENDPOINT', None), 
-    ('INPUT_TOPIC', None), 
-    ('OUTPUT_TOPIC', None), 
-    ('DELAY_MS', 0),
+# Input tuple (name, default, type)
+INPUT = [
+    ('KAFKA_BROKER_ENDPOINT', None, str), 
+    ('INPUT_TOPIC', None, str), 
+    ('OUTPUT_TOPIC', None, str), 
+    ('DELAY_MS', 0, int),
 ]
 
 log = logging.getLogger(__name__)
@@ -23,16 +24,16 @@ def setup_logging():
     if 'DEBUG' in os.environ:
         log.setLevel(logging.DEBUG)
 
-def get_input_value(variable_name, default_value):
+def get_input_value_from_environment(variable_name, default_value, variable_type):
     value = os.getenv(variable_name)
     if value is None:
         value = default_value
     if value is None:
         raise RuntimeError(f"Environment variable not set: {variable_name}")
-    return value
+    return variable_type(value)
 
-def get_input():
-    return  (get_input_value(input_variable, default) for input_variable, default in INPUT_AND_DEFAULT)
+def get_input() -> tuple[str, str, str, int]:
+    return (get_input_value_from_environment(input_variable, default, variable_type) for input_variable, default, variable_type in INPUT)
 
 def create_consumer(kafka_broker_endpoint: str, input_topic: str):
     return KafkaConsumer(

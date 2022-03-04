@@ -1,9 +1,10 @@
 import unittest
+import os
 from unittest.mock import Mock, patch
 
-from app.kafka_topic_replicator import calculate_delay_ms
+from app.kafka_topic_replicator import calculate_delay_ms, get_input
 
-class TestCalculateDelay(unittest.TestCase):
+class TestCalculateDelayMs(unittest.TestCase):
     
     def setUp(self):
         # Mock Consumer record
@@ -38,6 +39,27 @@ class TestCalculateDelay(unittest.TestCase):
         
         # Inspect
         self.assertEquals(sleep_delay_ms,0)
+
+class TestGetInput(unittest.TestCase):
+    def setUp(self):
+        os.environ["KAFKA_BROKER_ENDPOINT"] = "test"
+        os.environ["INPUT_TOPIC"] = "test"
+        os.environ["OUTPUT_TOPIC"] = "test"
+        os.environ["DELAY_MS"] = "1000"
+
+    def tearDown(self):
+        os.environ.pop("KAFKA_BROKER_ENDPOINT")
+        os.environ.pop("INPUT_TOPIC")
+        os.environ.pop("OUTPUT_TOPIC")
+        os.environ.pop("DELAY_MS")
+
+    def test_input_should_be_type_cast(self):
+        kafka_broker_endpoint, input_topic, output_topic, delay_ms = get_input()
+
+        self.assertEqual(type(kafka_broker_endpoint),str)
+        self.assertEqual(type(input_topic),str)
+        self.assertEqual(type(output_topic),str)
+        self.assertEqual(type(delay_ms),int)
 
 if __name__ == '__main__':
     unittest.main()
