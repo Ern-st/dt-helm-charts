@@ -1,44 +1,45 @@
 import unittest
 import os
+from datetime import datetime, timezone
 from unittest.mock import Mock, patch
 
-from app.kafka_topic_replicator import calculate_delay_ms, get_input
+from app.kafka_topic_replicator import calculate_delay_sec, get_input
 
 class TestCalculateDelayMs(unittest.TestCase):
     
     def setUp(self):
         # Mock Consumer record
         consumer_record_mock = Mock()
-        consumer_record_mock.timestamp = 1000
+        consumer_record_mock.timestamp = 1000 # Kafka timestamps are in miliseconds 
         self.consumer_record = consumer_record_mock
 
-    @patch('app.kafka_topic_replicator.get_current_timestamp_ms')    
+    @patch('app.kafka_topic_replicator.get_current_time')    
     def test_should_return_non_zero_when_record_is_no_older_than_delay(self, mock_timestamp_now):
-        mock_timestamp_now.return_value = 2000
+        mock_timestamp_now.return_value = datetime.fromtimestamp(2, tz=timezone.utc)
         # Act
-        sleep_delay_ms = calculate_delay_ms(self.consumer_record, delay_ms=4000)
+        sleep_delay_sec = calculate_delay_sec(self.consumer_record, delay_ms=4000)
         
         # Inspect
-        self.assertEquals(sleep_delay_ms,3000)
+        self.assertEquals(sleep_delay_sec,3)
 
 
-    @patch('app.kafka_topic_replicator.get_current_timestamp_ms')    
+    @patch('app.kafka_topic_replicator.get_current_time')    
     def test_should_return_zero_when_record_is_older_than_delay(self, mock_timestamp_now):
-        mock_timestamp_now.return_value = 6000
+        mock_timestamp_now.return_value = datetime.fromtimestamp(6, tz=timezone.utc)
         # Act
-        sleep_delay_ms = calculate_delay_ms(self.consumer_record, delay_ms=4000)
+        sleep_delay_sec = calculate_delay_sec(self.consumer_record, delay_ms=4000)
         
         # Inspect
-        self.assertEquals(sleep_delay_ms,0)
+        self.assertEquals(sleep_delay_sec,0)
 
-    @patch('app.kafka_topic_replicator.get_current_timestamp_ms')    
+    @patch('app.kafka_topic_replicator.get_current_time')    
     def test_should_return_zero_when_record_as_old_as_delay(self, mock_timestamp_now):
-        mock_timestamp_now.return_value = 5000
+        mock_timestamp_now.return_value = datetime.fromtimestamp(5, tz=timezone.utc)
         # Act
-        sleep_delay_ms = calculate_delay_ms(self.consumer_record, delay_ms=4000)
+        sleep_delay_sec = calculate_delay_sec(self.consumer_record, delay_ms=4000)
         
         # Inspect
-        self.assertEquals(sleep_delay_ms,0)
+        self.assertEquals(sleep_delay_sec,0)
 
 class TestGetInput(unittest.TestCase):
     def setUp(self):

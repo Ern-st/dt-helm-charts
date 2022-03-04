@@ -2,7 +2,7 @@ import os
 import logging
 
 from time import sleep
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from kafka import KafkaProducer, KafkaConsumer
 
@@ -44,11 +44,10 @@ def create_consumer(kafka_broker_endpoint: str, input_topic: str):
 def create_producer(kafka_broker_endpoint: str):
     return  KafkaProducer(bootstrap_servers=[kafka_broker_endpoint])
 
-def get_current_timestamp_ms():
-    now_sec: float = datetime.now().timestamp()
-    return now_sec * MS_TO_SEC_FACTOR 
+def get_current_time():
+    return datetime.now(tz=timezone.utc)
 
-def calculate_delay_ms(consumer_record, delay_ms: int):
+def calculate_delay_sec(consumer_record, delay_ms: int):
     """
     Calculate the actual delay in seconds to wait before the record can be replicated to the output topic.
     In the case of the record being produced more than 'delay_ms' ago, this returns 0.
@@ -58,13 +57,12 @@ def calculate_delay_ms(consumer_record, delay_ms: int):
         delay_ms (int): The allowed delay before the record is replicated to the output topic. 
 
     Returns:
-        int: The actual delay in miliseconds.
-    """
-    record_timestamp = consumer_record.timestamp
-    timestamp_now = get_current_timestamp_ms()
-    time_diff = timestamp_now - record_timestamp
-    further_delay_ms = 0 if delay_ms - time_diff < 0 else delay_ms - time_diff 
-    return further_delay_ms
+        float: The actual delay in seconds.
+    """ 
+    record_datetime = datetime.fromtimestamp(consumer_record.timestamp/MS_TO_SEC_FACTOR, tz=timezone.utc)
+    time_delta = record_datetime + timedelta(milliseconds=delay_ms) - get_current_time()
+    
+    return max(time_delta.total_seconds(),0.0)
 
 def on_broker_acknowledge(record_metadata):
     log.info(f"Sucessfully replicated record: {record_metadata}")
@@ -74,9 +72,9 @@ def on_replication_fail(record_metadata):
 
 def start_replication(consumer, producer, output_topic: str, delay_ms: int):
     for record in consumer:
-        time_until_replication = calculate_delay_ms(record, delay_ms)
-        log.info(f"Sleeping for {time_until_replication} milliseconds")
-        sleep(time_until_replication/MS_TO_SEC_FACTOR )
+        time_until_replication_sec = calculate_delay_sec(record, delay_ms)
+        log.info(f"Sleeping for {time_until_replication_sec} seconds")
+        sleep(time_until_replication_sec)
         producer.send(output_topic, record.value) \
             .add_callback(on_broker_acknowledge) \
             .add_errback(on_replication_fail)
