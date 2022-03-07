@@ -1,0 +1,19 @@
+apiVersion: v2
+name: exporters
+description: A Helm chart for our exporters
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: kube-state-metrics
+    version: "4.5.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: kube-state-metrics.enabled
+  - name: prometheus-node-exporter
+    version: "3.0.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus-node-exporter.enabled
+  - name: prometheus-kafka-exporter
+    version: "1.1.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus-kafka-exporter.enabled
