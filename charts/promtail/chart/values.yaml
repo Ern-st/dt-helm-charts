@@ -1,0 +1,14 @@
+promtail:
+  initContainer:
+    # -- Specifies whether the init container for setting inotify max user instances is to be enabled
+    enabled: true
+    # -- The inotify max user instances to configure
+    fsInotifyMaxUserInstances: 512
+
+  serviceMonitor:
+    enabled: true
+    labels:
+      instance: primary
+
+  config:
+    lokiAddress: http://loki-loki-distributed-distributor:3100/loki/api/v1/push

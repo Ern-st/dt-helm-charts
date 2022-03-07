@@ -28,6 +28,7 @@ chart-dirs:
   - charts/nidhogg
   - charts/ntp
   - charts/prometheus
+  - charts/promtail
   - charts/rook
   - charts/rook-helper
   - charts/thanos
