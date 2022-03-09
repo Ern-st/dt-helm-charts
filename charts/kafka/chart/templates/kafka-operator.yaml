@@ -44,12 +44,16 @@ spec:
       superUsers: # TODO add authentication
         - ANONYMOUS
     config: 
-      auto.create.topics.enable: {{ .Values.cluster.kafka.autoCreateTopic }}
-      offsets.topic.replication.factor: {{ .Values.cluster.kafka.offsetTopicReplicationFactor }}
-      transaction.state.log.replication.factor: {{ .Values.cluster.kafka.transactionStateLog.replicationFactor }}
-      transaction.state.log.min.isr: {{ .Values.cluster.kafka.transactionStateLog.minimumInSyncReplicas }}
       log.message.format.version: {{ .Values.cluster.kafka.version }}
       inter.broker.protocol.version: {{ .Values.cluster.kafka.version }}
+    {{- with .Values.cluster.kafka.config }}
+      auto.create.topics.enable: {{ .autoCreateTopicEnable }}
+      log.retention.hours: {{ default 168 .logRetentionHours }}
+      log.roll.hours: {{ default 168 .logRollHours }}
+      offsets.topic.replication.factor: {{ min $.Values.cluster.kafka.replicas (default 3 .offsetsTopicReplicationFactor) }}
+      transaction.state.log.replication.factor: {{ min $.Values.cluster.kafka.replicas (default 3 .transactionStateLogReplicationFactor ) }}
+      transaction.state.log.min.isr: {{ min $.Values.cluster.kafka.replicas (default 2 .transactionStateLogMinIsr) }}
+    {{- end }}
       ssl.cipher.suites: "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384" 
       ssl.enabled.protocols: "TLSv1.2"
       ssl.protocol: "TLSv1.2"

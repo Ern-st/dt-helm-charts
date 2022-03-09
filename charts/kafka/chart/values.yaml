@@ -13,12 +13,17 @@ cluster:
       class: standard
       size: 500Mi
     replicas: 1
-    # If a topic does not exist, create it if someone writes to it.
-    autoCreateTopic: "false"
-    offsetTopicReplicationFactor: 1
-    transactionStateLog:
-      replicationFactor: 1
-      minimumInSyncReplicas: 1
+    # A subset of the broker configuration can be set here
+    # see https://kafka.apache.org/documentation/#brokerconfigs
+    config:
+      # If a topic does not exist, create it if someone writes to it.
+      autoCreateTopicEnable: "false"
+      # The following configurations can be set, when not they use the default
+      # logRetentionHours: 168
+      # logRollHours: 168
+      # offsetsTopicReplicationFactor: 3
+      # transactionStateLogReplicationFactor: 3
+      # transactionStateLogMinIsr: 2
     # https://strimzi.io/docs/operators/in-development/using.html#type-GenericKafkaListener-reference
     listeners:
       - name: plain
