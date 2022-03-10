@@ -1,0 +1,5 @@
+apiVersion: v2
+name: kafka-topic-replicator
+description: A Helm chart for an appication that replicates one topic to another with a delay
+type: application
+version: 0.1.1
