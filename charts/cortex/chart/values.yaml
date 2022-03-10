@@ -16,4 +16,7 @@ bucketClaim:
   storageClassName: ceph-bucket
 
 # https://github.com/cortexproject/cortex-helm-chart/blob/master/values.yaml
-# cortex:
+cortex:
+  config:
+    limits:
+      compactor_blocks_retention_period: 336h

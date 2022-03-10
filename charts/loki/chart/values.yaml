@@ -1,2 +1,8 @@
 # https://github.com/grafana/helm-charts/blob/main/charts/loki-distributed/values.yaml
-# loki-distributed:
+loki-distributed:
+  loki:
+    structuredConfig:
+      limits_config:
+        retention_period: 336h
+      compactor:
+        retention_enabled: true

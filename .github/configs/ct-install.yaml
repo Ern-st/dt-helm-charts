@@ -20,6 +20,7 @@ chart-dirs:
   - charts/loki
   - charts/ntp
   - charts/prometheus
+  - charts/promtail
   - charts/rook-helper
   - charts/thanos
   - charts/tempo-distributed
