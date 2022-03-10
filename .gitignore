@@ -1,3 +1,5 @@
-*.lock
-
+**/Chart.lock
 *.tgz
+
+**/__pycache__
+**/.vscode
