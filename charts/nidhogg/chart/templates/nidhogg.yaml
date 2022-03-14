@@ -21,6 +21,30 @@ spec:
       version: v3
       values: |
         nidhogg:
+          {{- if .Values.cni.serviceMonitor.enabled }}
+          cni:
+            cilium:
+              hubble:
+                metrics:
+                  enabled: [dns,drop,tcp,flow,icmp,http]
+                  serviceMonitor:
+                    enabled: true
+                    labels:
+                      instance: primary
+              prometheus:
+                enabled: true
+                serviceMonitor:
+                  enabled: true
+                  labels:
+                    instance: primary
+              operator:
+                prometheus:
+                  enabled: true
+                  serviceMonitor:
+                    enabled: true
+                    labels:
+                      instance: primary
+          {{- end }}
           yggdrasil:
             {{- toYaml .Values.yggdrasil | nindent 12 }}
           {{- with (index .Values "lb-proxy") }}
