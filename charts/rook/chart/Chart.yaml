@@ -2,7 +2,7 @@ apiVersion: v2
 name: rook
 description: A Helm chart for Rook
 type: application
-version: 0.1.4
+version: 0.1.5
 
 dependencies:
   - name: rook-ceph
