@@ -1,19 +1,15 @@
 {
-    "__inputs": [
-    ],
-    "__requires": [
-    ],
+    "__inputs": [],
+    "__requires": [],
     "annotations": {
-        "list": [
-        ]
+        "list": []
     },
     "editable": false,
     "gnetId": null,
     "graphTooltip": 0,
     "hideControls": false,
     "id": null,
-    "links": [
-    ],
+    "links": [],
     "panels": [
         {
             "content": "The SLO (service level objective) and other metrics displayed on this dashboard are for informational purposes only.",
@@ -21,7 +17,7 @@
             "description": "The SLO (service level objective) and other metrics displayed on this dashboard are for informational purposes only.",
             "gridPos": {
                 "h": 2,
-            "w": 24,
+                "w": 24,
                 "x": 0,
                 "y": 0
             },
@@ -58,12 +54,10 @@
                         "thresholdLabels": false,
                         "thresholdMarkers": true
                     },
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 3,
                     "interval": null,
-                    "links": [
-                    ],
+                    "links": [],
                     "mappingType": 1,
                     "mappingTypes": [
                         {
@@ -123,8 +117,7 @@
                     "valueName": "avg"
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -133,8 +126,7 @@
                     "description": "How much error budget is left looking at our 0.990% availability guarantees?",
                     "fill": 10,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 4,
                     "legend": {
                         "alignAsTable": false,
@@ -150,16 +142,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 8,
                     "stack": false,
@@ -173,8 +163,7 @@
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "ErrorBudget (30d) > 99.000%",
@@ -189,8 +178,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -246,12 +234,10 @@
                         "thresholdLabels": false,
                         "thresholdMarkers": true
                     },
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 5,
                     "interval": null,
-                    "links": [
-                    ],
+                    "links": [],
                     "mappingType": 1,
                     "mappingTypes": [
                         {
@@ -311,8 +297,7 @@
                     "valueName": "avg"
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -320,8 +305,7 @@
                     "description": "How many read requests (LIST,GET) per second do the apiservers get by code?",
                     "fill": 10,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 6,
                     "legend": {
                         "alignAsTable": false,
@@ -337,8 +321,7 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
@@ -372,12 +355,11 @@
                             "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} code {{`}}`}}",
+                            "legendFormat": "{{ code }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Read SLI - Requests",
@@ -392,8 +374,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -415,8 +396,7 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -424,8 +404,7 @@
                     "description": "How many percent of read requests (LIST,GET) per second are returned with errors (5xx)?",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 7,
                     "legend": {
                         "alignAsTable": false,
@@ -441,16 +420,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 3,
                     "stack": false,
@@ -460,12 +437,11 @@
                             "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} resource {{`}}`}}",
+                            "legendFormat": "{{ resource }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Read SLI - Errors",
@@ -480,8 +456,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -503,8 +478,7 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -512,8 +486,7 @@
                     "description": "How many seconds is the 99th percentile for reading (LIST|GET) a given resource?",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 8,
                     "legend": {
                         "alignAsTable": false,
@@ -529,16 +502,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 3,
                     "stack": false,
@@ -548,12 +519,11 @@
                             "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"read\", cluster=\"$cluster\"}",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} resource {{`}}`}}",
+                            "legendFormat": "{{ resource }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Read SLI - Duration",
@@ -568,8 +538,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -623,12 +592,10 @@
                         "thresholdLabels": false,
                         "thresholdMarkers": true
                     },
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 9,
                     "interval": null,
-                    "links": [
-                    ],
+                    "links": [],
                     "mappingType": 1,
                     "mappingTypes": [
                         {
@@ -688,8 +655,7 @@
                     "valueName": "avg"
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -697,8 +663,7 @@
                     "description": "How many write requests (POST|PUT|PATCH|DELETE) per second do the apiservers get by code?",
                     "fill": 10,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 10,
                     "legend": {
                         "alignAsTable": false,
@@ -714,8 +679,7 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
@@ -749,12 +713,11 @@
                             "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} code {{`}}`}}",
+                            "legendFormat": "{{ code }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Write SLI - Requests",
@@ -769,8 +732,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -792,8 +754,7 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -801,8 +762,7 @@
                     "description": "How many percent of write requests (POST|PUT|PATCH|DELETE) per second are returned with errors (5xx)?",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 11,
                     "legend": {
                         "alignAsTable": false,
@@ -818,16 +778,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 3,
                     "stack": false,
@@ -837,12 +795,11 @@
                             "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} resource {{`}}`}}",
+                            "legendFormat": "{{ resource }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Write SLI - Errors",
@@ -857,8 +814,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -880,8 +836,7 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
@@ -889,8 +844,7 @@
                     "description": "How many seconds is the 99th percentile for writing (POST|PUT|PATCH|DELETE) a given resource?",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 12,
                     "legend": {
                         "alignAsTable": false,
@@ -906,16 +860,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 3,
                     "stack": false,
@@ -925,12 +877,11 @@
                             "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"write\", cluster=\"$cluster\"}",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}} resource {{`}}`}}",
+                            "legendFormat": "{{ resource }}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Write SLI - Duration",
@@ -945,8 +896,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -981,16 +931,14 @@
             "collapsed": false,
             "panels": [
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 13,
                     "legend": {
                         "alignAsTable": false,
@@ -1006,16 +954,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 6,
                     "stack": false,
@@ -1025,12 +971,11 @@
                             "expr": "sum(rate(workqueue_adds_total{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name)",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
+                            "legendFormat": "{{instance}} {{name}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Work Queue Add Rate",
@@ -1045,8 +990,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1068,16 +1012,14 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 14,
                     "legend": {
                         "alignAsTable": false,
@@ -1093,16 +1035,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 6,
                     "stack": false,
@@ -1112,12 +1052,11 @@
                             "expr": "sum(rate(workqueue_depth{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name)",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
+                            "legendFormat": "{{instance}} {{name}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Work Queue Depth",
@@ -1132,8 +1071,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1155,16 +1093,14 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 15,
                     "legend": {
                         "alignAsTable": true,
@@ -1180,16 +1116,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 12,
                     "stack": false,
@@ -1199,12 +1133,11 @@
                             "expr": "histogram_quantile(0.99, sum(rate(workqueue_queue_duration_seconds_bucket{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name, le))",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
+                            "legendFormat": "{{instance}} {{name}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Work Queue Latency",
@@ -1219,8 +1152,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1255,16 +1187,14 @@
             "collapsed": false,
             "panels": [
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 16,
                     "legend": {
                         "alignAsTable": false,
@@ -1280,16 +1210,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 4,
                     "stack": false,
@@ -1299,12 +1227,11 @@
                             "expr": "process_resident_memory_bytes{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                            "legendFormat": "{{instance}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Memory",
@@ -1319,8 +1246,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1342,16 +1268,14 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 17,
                     "legend": {
                         "alignAsTable": false,
@@ -1367,16 +1291,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 4,
                     "stack": false,
@@ -1386,12 +1308,11 @@
                             "expr": "rate(process_cpu_seconds_total{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                            "legendFormat": "{{instance}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "CPU usage",
@@ -1406,8 +1327,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1429,16 +1349,14 @@
                     ]
                 },
                 {
-                    "aliasColors": {
-                    },
+                    "aliasColors": {},
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "$datasource",
                     "fill": 1,
                     "fillGradient": 0,
-                    "gridPos": {
-                    },
+                    "gridPos": {},
                     "id": 18,
                     "legend": {
                         "alignAsTable": false,
@@ -1454,16 +1372,14 @@
                     },
                     "lines": true,
                     "linewidth": 1,
-                    "links": [
-                    ],
+                    "links": [],
                     "nullPointMode": "null",
                     "percentage": false,
                     "pointradius": 5,
                     "points": false,
                     "renderer": "flot",
                     "repeat": null,
-                    "seriesOverrides": [
-                    ],
+                    "seriesOverrides": [],
                     "spaceLength": 10,
                     "span": 4,
                     "stack": false,
@@ -1473,12 +1389,11 @@
                             "expr": "go_goroutines{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                            "legendFormat": "{{instance}}",
                             "refId": "A"
                         }
                     ],
-                    "thresholds": [
-                    ],
+                    "thresholds": [],
                     "timeFrom": null,
                     "timeShift": null,
                     "title": "Goroutines",
@@ -1493,8 +1408,7 @@
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [
-                        ]
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1540,8 +1454,7 @@
                 "hide": 0,
                 "label": null,
                 "name": "datasource",
-                "options": [
-                ],
+                "options": [],
                 "query": "prometheus",
                 "refresh": 1,
                 "regex": "",
@@ -1549,45 +1462,39 @@
             },
             {
                 "allValue": null,
-                "current": {
-                },
+                "current": {},
                 "datasource": "$datasource",
                 "includeAll": false,
                 "label": "cluster",
                 "multi": false,
                 "name": "cluster",
-                "options": [
-                ],
+                "options": [],
                 "query": "label_values(apiserver_request_total, cluster)",
                 "refresh": 2,
                 "regex": "",
                 "sort": 1,
                 "tagValuesQuery": "",
-                "tags": [
-                ],
+                "tags": [],
                 "tagsQuery": "",
                 "type": "query",
                 "useTags": false
             },
             {
                 "allValue": null,
-                "current": {
-                },
+                "current": {},
                 "datasource": "$datasource",
                 "hide": 0,
                 "includeAll": true,
                 "label": null,
                 "multi": false,
                 "name": "instance",
-                "options": [
-                ],
+                "options": [],
                 "query": "label_values(apiserver_request_total{job=\"apiserver\", cluster=\"$cluster\"}, instance)",
                 "refresh": 2,
                 "regex": "",
                 "sort": 1,
                 "tagValuesQuery": "",
-                "tags": [
-                ],
+                "tags": [],
                 "tagsQuery": "",
                 "type": "query",
                 "useTags": false

@@ -2,7 +2,7 @@ apiVersion: v2
 name: grafana
 description: A Helm umbrella chart for Grafana
 type: application
-version: 0.1.10
+version: 0.1.12
 
 dependencies:
   - name: grafana
