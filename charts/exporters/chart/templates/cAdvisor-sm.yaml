@@ -1,5 +1,5 @@
-{{- if .Values.cadvisor }} {{/* <-- Check if the fiels exists */}}
-{{- if .Values.cadvisor.monitor }} {{/* <-- Check if the fiels exists */}}
+{{- if .Values.cadvisor }} {{/* <-- Check if the field exists */}}
+{{- if .Values.cadvisor.monitor }} {{/* <-- Check if the field exists */}}
 {{- if .Values.cadvisor.monitor.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -34,7 +34,7 @@ spec:
       insecureSkipVerify: true
   namespaceSelector:
     matchNames:
-      - {{ .Release.Namespace }}
+      - kube-system
   selector:
     matchLabels:
       app.kubernetes.io/name: kubelet
