@@ -2,7 +2,7 @@ apiVersion: v2
 type: application
 name: nidhogg
 description: A chart that deploys nidhogg.
-version: 1.0.17
+version: 1.0.18
 
 dependencies:
   - name: argo-cd-proxy-chart
@@ -11,7 +11,7 @@ dependencies:
   - name: cni
     version: 1.0.0
     repository: "https://distributed-technologies.github.io/helm-charts/"
-    condition: 'installCNI'
+    condition: 'cni.enabled'
   - name: lb-proxy
     version: "0.1.0"
     repository: "https://distributed-technologies.github.io/helm-charts/"

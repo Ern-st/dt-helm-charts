@@ -2,7 +2,11 @@ yggdrasil:
   repoURL: "https://github.com/distributed-technologies/yggdrasil.git"
   targetRevision: "main"
 
-installCNI: true
+cni:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+
 monitorNidhogg: true
 
 lb-proxy:

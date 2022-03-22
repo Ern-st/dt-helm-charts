@@ -8,5 +8,5 @@ dependencies:
 - name: lb-proxy
   repository: https://distributed-technologies.github.io/helm-charts/
   version: 0.1.0
-digest: sha256:c3058e997e797bc6b34c556667305c7bb58f31a5e1ce00ade7804716a70dbe1a
-generated: "2022-02-21T15:13:13.934454327Z"
+digest: sha256:c27befc40e848330f56535d2c6e88a741a6226ffd63212ba1b254a01de781296
+generated: "2022-03-15T08:55:07.555062608+01:00"
