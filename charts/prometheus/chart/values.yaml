@@ -6,30 +6,11 @@ kube-prometheus-stack:
   alertmanager:
     enable: false
 
-  kubeStateMetrics:
-    # This is set to false since we're deploying our own instance - using this condition https://github.com/prometheus-community/helm-charts/blob/90930fcb26e41156892a4457133b38a238469ee8/charts/kube-prometheus-stack/Chart.yaml#L43-L46
-    enabled: false
-
-  nodeExporter:
-    # This is set to false since we're deploying our own instance - using this condition https://github.com/prometheus-community/helm-charts/blob/90930fcb26e41156892a4457133b38a238469ee8/charts/kube-prometheus-stack/Chart.yaml#L47-L50
-    enabled: false
-
   prometheus:
     enabled: true
 
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusspec
     prometheusSpec:
-      serviceMonitorSelector:
-        matchLabels:
-          instance: primary
-
-      podMonitorSelector:
-        matchLabels:
-          instance: primary
-
-      probeSelector:
-        matchLabels:
-          instance: primary
 
       # This is set from 10d to 2h because, Cause we should remote-write to cortex, and shouldn't need a large retention on prometheus itself
       retention: 2h
