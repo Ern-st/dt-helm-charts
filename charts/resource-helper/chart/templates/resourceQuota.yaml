@@ -1,0 +1,23 @@
+{{- $ := . }}
+{{- range $i, $val := .Values.resourceQuotas }}
+{{- if .enabled }}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: {{ template "helper.resourceQuota.name" (dict "context" $ "name" .name) }}
+  labels:
+    {{- include "helper.labels" $ | nindent 4 }}
+    {{- if .labels }}
+    {{- toYaml .labels | nindent 4 }}
+    {{- end }}
+  {{- if .annotations }}
+  annotations:
+  {{- range $key, $value := .annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+spec:
+{{ toYaml .spec | indent 2 }}
+{{- end }}
+{{- end }}
