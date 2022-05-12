@@ -1,0 +1,25 @@
+{{- if .Values.project.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ template "helper.project.name" . }}
+  namespace: {{ .Values.project.argocdNamespace }}
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+    {{- if .Values.project.labels }}
+    {{- toYaml .Values.project.labels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.project.annotations }}
+  annotations:
+  {{- range $key, $value := .Values.project.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if .Values.project.finalizers }}
+  finalizers:
+  {{ toYaml .Values.project.finalizers | indent 2 }}
+  {{- end }}
+spec:
+{{ toYaml .Values.project.spec | indent 2 }}
+{{- end }}
