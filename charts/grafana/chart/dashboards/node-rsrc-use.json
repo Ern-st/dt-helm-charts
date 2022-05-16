@@ -700,7 +700,7 @@
                             "expr": "instance_device:node_disk_io_time_seconds:rate5m{job=\"node-exporter\", instance=\"$instance\", cluster=\"$cluster\"} != 0",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}device{{`}}`}}",
+                            "legendFormat": "{{device}}",
                             "refId": "A"
                         }
                     ],
@@ -793,7 +793,7 @@
                             "expr": "instance_device:node_disk_io_time_weighted_seconds:rate5m{job=\"node-exporter\", instance=\"$instance\", cluster=\"$cluster\"} != 0",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}device{{`}}`}}",
+                            "legendFormat": "{{device}}",
                             "refId": "A"
                         }
                     ],
@@ -899,7 +899,7 @@
                             "expr": "sort_desc(1 -\n  (\n   max without (mountpoint, fstype) (node_filesystem_avail_bytes{job=\"node-exporter\", fstype!=\"\", instance=\"$instance\", cluster=\"$cluster\"})\n   /\n   max without (mountpoint, fstype) (node_filesystem_size_bytes{job=\"node-exporter\", fstype!=\"\", instance=\"$instance\", cluster=\"$cluster\"})\n  ) != 0\n)\n",
                             "format": "time_series",
                             "intervalFactor": 2,
-                            "legendFormat": "{{`{{`}}device{{`}}`}}",
+                            "legendFormat": "{{device}}",
                             "refId": "A"
                         }
                     ],
