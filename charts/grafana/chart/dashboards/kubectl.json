@@ -125,7 +125,7 @@
                     "expr": "sum(kubelet_running_pods{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}) OR sum(kubelet_running_pod_count{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"})",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -182,7 +182,7 @@
                     "expr": "sum(kubelet_running_containers{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}) OR sum(kubelet_running_container_count{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"})",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -239,7 +239,7 @@
                     "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\", state=\"actual_state_of_world\"})",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -296,7 +296,7 @@
                     "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\",state=\"desired_state_of_world\"})",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -353,7 +353,7 @@
                     "expr": "sum(rate(kubelet_node_config_error{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m]))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -412,7 +412,7 @@
                     "expr": "sum(rate(kubelet_runtime_operations_total{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (operation_type, instance)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_type{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_type}}",
                     "refId": "A"
                 }
             ],
@@ -507,7 +507,7 @@
                     "expr": "sum(rate(kubelet_runtime_operations_errors_total{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, operation_type)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_type{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_type}}",
                     "refId": "A"
                 }
             ],
@@ -602,7 +602,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_runtime_operations_duration_seconds_bucket{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, operation_type, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_type{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_type}}",
                     "refId": "A"
                 }
             ],
@@ -697,14 +697,14 @@
                     "expr": "sum(rate(kubelet_pod_start_duration_seconds_count{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} pod",
+                    "legendFormat": "{{instance}} pod",
                     "refId": "A"
                 },
                 {
                     "expr": "sum(rate(kubelet_pod_worker_duration_seconds_count{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} worker",
+                    "legendFormat": "{{instance}} worker",
                     "refId": "B"
                 }
             ],
@@ -799,14 +799,14 @@
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_pod_start_duration_seconds_count{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} pod",
+                    "legendFormat": "{{instance}} pod",
                     "refId": "A"
                 },
                 {
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_pod_worker_duration_seconds_bucket{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} worker",
+                    "legendFormat": "{{instance}} worker",
                     "refId": "B"
                 }
             ],
@@ -903,7 +903,7 @@
                     "expr": "sum(rate(storage_operation_duration_seconds_count{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, operation_name, volume_plugin)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_name{{`}}`}} {{`{{`}}volume_plugin{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_name}} {{volume_plugin}}",
                     "refId": "A"
                 }
             ],
@@ -1000,7 +1000,7 @@
                     "expr": "sum(rate(storage_operation_errors_total{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, operation_name, volume_plugin)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_name{{`}}`}} {{`{{`}}volume_plugin{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_name}} {{volume_plugin}}",
                     "refId": "A"
                 }
             ],
@@ -1097,7 +1097,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(storage_operation_duration_seconds_bucket{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m])) by (instance, operation_name, volume_plugin, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_name{{`}}`}} {{`{{`}}volume_plugin{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_name}} {{volume_plugin}}",
                     "refId": "A"
                 }
             ],
@@ -1192,7 +1192,7 @@
                     "expr": "sum(rate(kubelet_cgroup_manager_duration_seconds_count{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m])) by (instance, operation_type)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}operation_type{{`}}`}}",
+                    "legendFormat": "{{operation_type}}",
                     "refId": "A"
                 }
             ],
@@ -1287,7 +1287,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_cgroup_manager_duration_seconds_bucket{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m])) by (instance, operation_type, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}operation_type{{`}}`}}",
+                    "legendFormat": "{{instance}} {{operation_type}}",
                     "refId": "A"
                 }
             ],
@@ -1383,7 +1383,7 @@
                     "expr": "sum(rate(kubelet_pleg_relist_duration_seconds_count{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m])) by (instance)",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -1478,7 +1478,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_interval_seconds_bucket{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -1573,7 +1573,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])) by (instance, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -1784,7 +1784,7 @@
                     "expr": "histogram_quantile(0.99, sum(rate(rest_client_request_duration_seconds_bucket{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"$instance\"}[5m])) by (instance, verb, url, le))",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}verb{{`}}`}} {{`{{`}}url{{`}}`}}",
+                    "legendFormat": "{{instance}} {{verb}} {{url}}",
                     "refId": "A"
                 }
             ],
@@ -1879,7 +1879,7 @@
                     "expr": "process_resident_memory_bytes{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -1974,7 +1974,7 @@
                     "expr": "rate(process_cpu_seconds_total{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}[5m])",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
@@ -2069,7 +2069,7 @@
                     "expr": "go_goroutines{cluster=\"$cluster\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"$instance\"}",
                     "format": "time_series",
                     "intervalFactor": 2,
-                    "legendFormat": "{{`{{`}}instance{{`}}`}}",
+                    "legendFormat": "{{instance}}",
                     "refId": "A"
                 }
             ],
