@@ -2,7 +2,7 @@ apiVersion: v2
 name: prometheus
 description: A Helm chart for Prometheus
 type: application
-version: 0.1.5
+version: 0.1.6
 
 # In version 33.1.0 there are some problems with a too big CRD from the operator, see https://github.com/prometheus-operator/prometheus-operator/issues/4439#issue-1073133029
 # For now I will not update to the latest version.
