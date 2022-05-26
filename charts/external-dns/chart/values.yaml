@@ -1,0 +1,5 @@
+external-dns:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
