@@ -1,4 +1,4 @@
 apiVersion: v2
-name: chart
+name: squid
 description: A Helm chart for Squid
 version: 0.1.0
