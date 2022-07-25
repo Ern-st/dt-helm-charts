@@ -46,6 +46,7 @@ spec:
             - mountPath: /etc/envoy/envoy.yaml
               name: config
               subPath: envoy.yaml
+        {{- if .Values.nginx.enabled }}
         - name: nginx
           securityContext:
             {{- toYaml .Values.nginx.securityContext | nindent 12 }}
@@ -64,6 +65,30 @@ spec:
             - mountPath: /etc/nginx/ssl
               name: ssl
               readOnly: true
+        {{- end }}
+        {{- if .Values.caddy.enabled }}
+        - name: caddy
+          securityContext:
+            {{- toYaml .Values.caddy.securityContext | nindent 12 }}
+          image: "{{ .Values.caddy.image.repository }}:{{ .Values.caddy.image.tag }}"
+          imagePullPolicy: {{ .Values.caddy.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+          resources:
+            {{- toYaml .Values.caddy.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/caddy/Caddyfile
+              name: config
+              subPath: Caddyfile
+            - mountPath: /data/caddy/pki/authorities/local/root.crt
+              name: root-ssl
+              subPath: root.crt
+            - mountPath: /data/caddy/pki/authorities/local/root.key
+              name: root-ssl
+              subPath: root.key
+        {{- end }}
       volumes:
         - name: config
           configMap:
@@ -71,6 +96,14 @@ spec:
         - name: ssl
           secret:
             secretName: {{ include "fwd-proxy.fullname" . }}
+        - name: root-ssl
+          secret:
+            secretName: {{ include "fwd-proxy.fullname" . }}
+            items:
+              - key: root_ca.crt
+                path: root.crt
+              - key: root_ca.key
+                path: root.key
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

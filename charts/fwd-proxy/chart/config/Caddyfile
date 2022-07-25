@@ -1,0 +1,47 @@
+{
+	debug
+	auto_https disable_redirects
+	local_certs
+	skip_install_trust
+}
+
+:80 {
+	respond / 404
+	respond /healthz 200
+}
+
+{{- range .Values.registries }}
+http://{{ . }}, https://{{ . }} {
+	respond / 200
+
+	reverse_proxy /v2/ http://image-registry-service
+	reverse_proxy /v2/_catalog http://image-registry-service
+
+	@pathAfterVersion path_regexp xp ^/v2/(.+)
+
+	{{- /* docker.io is mapped to registry-1.docker.io in the code:
+				* https://github.com/containers/image/blob/b55fb86c28b7d743cf59701332cd78d4294c7c54/docker/docker_client.go#L249-L251
+	*/}}
+	{{- if eq . "registry-1.docker.io" }}
+	rewrite @pathAfterVersion /v2/docker.io/{re.xp.1}
+	{{- else }}
+	rewrite @pathAfterVersion /v2/{{ . }}/{re.xp.1}
+	{{- end }}
+	reverse_proxy http://image-registry-service
+}
+{{- end }}
+
+{{- range .Values.gitRepositories }}
+http://{{ . }}, https://{{ . }} {
+	respond / 200
+
+	reverse_proxy * http://git-server-service
+}
+{{- end }}
+
+{{- range .Values.helmRepositories }}
+http://{{ . }}, https://{{ . }} {
+	rewrite * /{file}
+	reverse_proxy http://helm-server-service
+}
+{{- end }}
