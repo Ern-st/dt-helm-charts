@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "fwd-proxy.labels" . | nindent 4 }}
 data:
-  envoy.yaml: | 
+  envoy.yaml: |
     {{- .Files.Get "config/envoy.yaml" | nindent 4 }}
-  nginx.conf: |
-    {{- tpl (.Files.Get "config/nginx.conf") . | nindent 4 }}
+  Caddyfile: |
+    {{- tpl (.Files.Get "config/caddyfile") . | nindent 4 }}

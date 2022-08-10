@@ -46,31 +46,39 @@ spec:
             - mountPath: /etc/envoy/envoy.yaml
               name: config
               subPath: envoy.yaml
-        - name: nginx
+        - name: caddy
           securityContext:
-            {{- toYaml .Values.nginx.securityContext | nindent 12 }}
-          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
-          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+            {{- toYaml .Values.caddy.securityContext | nindent 12 }}
+          image: "{{ .Values.caddy.image.repository }}:{{ .Values.caddy.image.tag }}"
+          imagePullPolicy: {{ .Values.caddy.image.pullPolicy }}
           livenessProbe:
             httpGet:
               path: /healthz
               port: 80
           resources:
-            {{- toYaml .Values.nginx.resources | nindent 12 }}
+            {{- toYaml .Values.caddy.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /etc/nginx/nginx.conf
+            - mountPath: /etc/caddy/Caddyfile
               name: config
-              subPath: nginx.conf
-            - mountPath: /etc/nginx/ssl
-              name: ssl
-              readOnly: true
+              subPath: Caddyfile
+            - mountPath: /data/caddy/pki/authorities/local/root.crt
+              name: root-ssl
+              subPath: root.crt
+            - mountPath: /data/caddy/pki/authorities/local/root.key
+              name: root-ssl
+              subPath: root.key
       volumes:
         - name: config
           configMap:
             name: {{ include "fwd-proxy.fullname" . }}
-        - name: ssl
+        - name: root-ssl
           secret:
             secretName: {{ include "fwd-proxy.fullname" . }}
+            items:
+              - key: root_ca.crt
+                path: root.crt
+              - key: root_ca.key
+                path: root.key
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
