@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vault.fullname" . }}-unsealer
+  labels:
+    {{- include "vault.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "vault.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "vault.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.vault.server.image.repository }}:{{ .Values.vault.server.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.vault.server.image.pullPolicy }}
+          command: ["/usr/local/bin/vault-unsealer"]
+          env:
+            - name: VAULT_ADDR
+              value: "http://{{ template "vault.fullname" . }}:{{ .Values.vault.server.service.targetPort }}"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/local/bin/vault-unsealer
+              subPath: vault-unsealer
+            - mountPath: /etc/vault-unsealer
+              name: data-volume
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "vault.fullname" . }}
+            defaultMode: 0755
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: {{ include "vault.fullname" . }}
