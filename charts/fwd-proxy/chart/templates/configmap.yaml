@@ -7,11 +7,5 @@ metadata:
 data:
   envoy.yaml: |
     {{- .Files.Get "config/envoy.yaml" | nindent 4 }}
-  {{- if .Values.nginx.enabled }}
-  nginx.conf: |
-    {{- tpl (.Files.Get "config/nginx.conf") . | nindent 4 }}
-  {{- end }}
-  {{- if .Values.caddy.enabled }}
   Caddyfile: |
     {{- tpl (.Files.Get "config/caddyfile") . | nindent 4 }}
-  {{- end }}

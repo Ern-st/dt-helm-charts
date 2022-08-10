@@ -46,27 +46,6 @@ spec:
             - mountPath: /etc/envoy/envoy.yaml
               name: config
               subPath: envoy.yaml
-        {{- if .Values.nginx.enabled }}
-        - name: nginx
-          securityContext:
-            {{- toYaml .Values.nginx.securityContext | nindent 12 }}
-          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
-          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-          resources:
-            {{- toYaml .Values.nginx.resources | nindent 12 }}
-          volumeMounts:
-            - mountPath: /etc/nginx/nginx.conf
-              name: config
-              subPath: nginx.conf
-            - mountPath: /etc/nginx/ssl
-              name: ssl
-              readOnly: true
-        {{- end }}
-        {{- if .Values.caddy.enabled }}
         - name: caddy
           securityContext:
             {{- toYaml .Values.caddy.securityContext | nindent 12 }}
@@ -88,14 +67,10 @@ spec:
             - mountPath: /data/caddy/pki/authorities/local/root.key
               name: root-ssl
               subPath: root.key
-        {{- end }}
       volumes:
         - name: config
           configMap:
             name: {{ include "fwd-proxy.fullname" . }}
-        - name: ssl
-          secret:
-            secretName: {{ include "fwd-proxy.fullname" . }}
         - name: root-ssl
           secret:
             secretName: {{ include "fwd-proxy.fullname" . }}
