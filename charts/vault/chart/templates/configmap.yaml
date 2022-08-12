@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "vault.fullname" . }}
+  labels:
+    {{- include "vault.labels" . | nindent 4 }}
+data:
+  vault-unsealer: |
+    #!/usr/bin/dumb-init /bin/ash
+    set -o nounset -o errexit -o pipefail
+
+    log() {
+      printf "%s: %s\n" "$(date -Isec)" "${1}"
+    }
+
+    until vault status >/dev/null 2>&1 || [ "${?}" -ne 1 ]; do
+      log "Waiting for the vault to start, sleeping 5 seconds..."
+      sleep 5
+    done
+
+    if [ -f /etc/vault-unsealer/cluster-keys.yaml ]; then
+      log "Already initialized"
+    else
+      vault operator init -key-shares=1 -key-threshold=1 -format=yaml > /etc/vault-unsealer/cluster-keys.yaml.tmp
+      mv /etc/vault-unsealer/cluster-keys.yaml.tmp /etc/vault-unsealer/cluster-keys.yaml
+      log "Initialized the vault"
+    fi
+
+    while true; do
+      if vault status -format yaml | grep -q "^sealed: false"; then
+        log "Already unsealed"
+      else
+        unseal_key="$(grep -A1 -m1 '^unseal_keys_b64:$' /etc/vault-unsealer/cluster-keys.yaml | tail -n 1 | awk '{print $2}')"
+        if ! vault operator unseal "${unseal_key}"; then
+          log "Unsealing failed :/"
+        else
+          log "Unsealed the vault"
+        fi
+      fi
+      log "Sleeping 60 seconds"
+      sleep 60
+    done

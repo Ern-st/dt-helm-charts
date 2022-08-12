@@ -1,11 +1,10 @@
 apiVersion: v2
 name: vault
-description: A Helm chart for Kubernetes
+description: A Helm chart for Vault with auto unsealing
 type: application
-version: 0.1.1
+version: 0.1.2
 
 dependencies:
-- name: vault
-  version: "0.13.0"
-  repository: "https://helm.releases.hashicorp.com"
-  condition: vault.enabled
+  - name: vault
+    version: 0.20.1
+    repository: https://helm.releases.hashicorp.com
