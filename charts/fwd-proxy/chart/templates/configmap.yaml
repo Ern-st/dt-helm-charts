@@ -8,4 +8,4 @@ data:
   envoy.yaml: |
     {{- .Files.Get "config/envoy.yaml" | nindent 4 }}
   Caddyfile: |
-    {{- tpl (.Files.Get "config/caddyfile") . | nindent 4 }}
+    {{- tpl (.Files.Get "config/Caddyfile") . | nindent 4 }}
