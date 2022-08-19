@@ -4,6 +4,7 @@ metadata:
   name: "test-git-clone"
   annotations:
     "helm.sh/hook": test
+    "helm.sh/hook-weight": "1"
 spec:
   containers:
     - name: {{ .Release.Name }}-clone

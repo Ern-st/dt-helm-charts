@@ -26,5 +26,4 @@ dataVolume:
 gitServerReposVolume:
   emptyDir: {}
 # All git repositories created
-repos:
-  - git-test-project
+repos: []
