@@ -11,6 +11,8 @@ spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/cm-nginx.yaml") . | sha256sum }}
       labels:
         app: git-server
     spec:
