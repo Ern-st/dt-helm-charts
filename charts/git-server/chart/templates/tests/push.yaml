@@ -4,6 +4,7 @@ metadata:
   name: "test-git-push"
   annotations:
     "helm.sh/hook": test
+    "helm.sh/hook-weight": "0"
 spec:
   containers:
     - name: {{ .Release.Name }}-push
@@ -13,8 +14,13 @@ spec:
         allowPrivilegeEscalation: false
         runAsUser: 0
       command: [ 'sh' , '-c']
-      args: 
+      args:
+        # FIXME: We should a custom values file with the "git-test-project" repo specified
+        # Waiting on upstream: https://github.com/helm/chart-testing-action/issues/47
         - set -o errexit;
+          mkdir /var/lib/git/git-test-project.git;
+          git -C /var/lib/git/git-test-project.git init --bare;
+          chown -R 1000:1000 /var/lib/git/git-test-project.git;
           mkdir git-test-project;
           cd git-test-project;
           git config --global init.defaultBranch main;
@@ -26,5 +32,11 @@ spec:
           git add . ;
           git commit -m "test";
           git push -f --set-upstream origin main;
-      
+      volumeMounts:
+        - mountPath: /var/lib/git/
+          name: git-server-repos
+  volumes:
+    - name: git-server-repos
+      persistentVolumeClaim:
+        claimName: git-server-data-pvc
   restartPolicy: Never

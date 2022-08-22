@@ -10,7 +10,7 @@ fcgi:
   image:
     repository: ghcr.io/distributed-technologies/helm-charts/git-server
     pullPolicy: IfNotPresent
-    tag: "0.2.2"
+    tag: ""
 
 service:
   type: ClusterIP
@@ -26,5 +26,4 @@ dataVolume:
 gitServerReposVolume:
   emptyDir: {}
 # All git repositories created
-repos:
-  - git-test-project
+repos: []

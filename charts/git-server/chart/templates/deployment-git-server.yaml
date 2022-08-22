@@ -11,6 +11,8 @@ spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/cm-nginx.yaml") . | sha256sum }}
       labels:
         app: git-server
     spec:
@@ -31,7 +33,7 @@ spec:
           subPath: nginx.conf
           readOnly: true
           name: nginx-conf-volume
-      - image: "{{ .Values.fcgi.image.repository }}:{{ .Values.fcgi.image.tag }}"
+      - image: "{{ .Values.fcgi.image.repository }}:{{ .Values.fcgi.image.tag | default .Chart.Version }}"
         imagePullPolicy: {{ .Values.fcgi.image.pullPolicy }}
         name: git-server-fcgi
         args: [ "{{ join " " .Values.repos }}" ]
