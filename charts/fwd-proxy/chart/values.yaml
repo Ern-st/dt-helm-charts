@@ -16,6 +16,7 @@ registries:
   - "k8s.gcr.io"
   - "quay.io"
   - "gridopsingularity.azurecr.io"
+  - "registry.k8s.io"
 
 gitRepositories:
   - "github.com"
@@ -24,6 +25,13 @@ gitRepositories:
 helmRepositories:
   - "distributed-technologies.github.io"
   - "energinet-singularity.github.io"
+  - "charts.external-secrets.io"
+  - "charts.rook.io"
+  - "cortexproject.github.io"
+  - "grafana.github.io"
+  - "helm.cilium.io"
+  - "metallb.github.io"
+  - "prometheus-community.github.io"
 
 service:
   type: NodePort
