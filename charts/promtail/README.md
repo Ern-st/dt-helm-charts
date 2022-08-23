@@ -1,2 +1,0 @@
-# Promtail
-Promtail Helm chart

@@ -1,9 +1,0 @@
-apiVersion: v2
-name: cni
-description: A helm chart for our CNI
-version: 1.0.0
-
-dependencies:
-  - name: cilium
-    version: 1.11.1
-    repository: "https://helm.cilium.io/"

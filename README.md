@@ -1,5 +1,5 @@
 # helm-charts
-This is our mono repository that contains all of our proxy charts. 
+This is our mono repository that contains all of our charts.
 
 ### Adding a Helm chart
 If you would like to add a new service or Helm chart in general to this repository, please follow these steps carefully. 

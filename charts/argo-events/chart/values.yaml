@@ -1,3 +1,0 @@
-argo-events:
-    enabled: true
-    # docs: https://github.com/argoproj/argo-helm/blob/master/charts/argo-events/values.yaml

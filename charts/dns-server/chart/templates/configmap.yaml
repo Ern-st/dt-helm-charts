@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "services-dns-server.fullname" . }}-configmap
-  labels:
-    {{- include "services-dns-server.labels" . | nindent 4 }}
-data:
-{{ tpl (.Files.Glob "config/*").AsConfig . | indent 2 }}

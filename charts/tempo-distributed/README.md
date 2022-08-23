@@ -1,3 +1,0 @@
-# Tempo
-Tempo-distributed
-
