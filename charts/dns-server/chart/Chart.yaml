@@ -1,5 +1,0 @@
-apiVersion: v2
-name: dns-server
-description: A Helm chart for setting up Bind9 as a DNS server for a .local domain
-type: application
-version: 0.1.8

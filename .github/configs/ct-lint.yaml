@@ -4,57 +4,18 @@
 remote: origin
 target-branch: main
 chart-dirs:
-  - charts/argo-cd
-  - charts/argo-events
-  - charts/argo-wf
   - charts/artifact-registry
-  - charts/cache
-  - charts/ceph
-  - charts/cni
-  - charts/cortex
-  - charts/dns-server
   - charts/fwd-proxy
   - charts/git-server
-  - charts/grafana
-  - charts/grafana-agent
-  - charts/ha-proxy
-  - charts/harbor
-  - charts/jaeger
   - charts/kafka
-  - charts/lb-proxy
-  - charts/lightvessel
-  - charts/loadbalancer
-  - charts/loki
-  - charts/nidhogg
   - charts/ntp
-  - charts/prometheus
-  - charts/promtail
-  - charts/rook
-  - charts/rook-helper
-  - charts/thanos
-  - charts/tempo-distributed
-  - charts/traefik
   - charts/vault
   - charts/squid
 chart-repos:
-  - helmcharts=https://distributed-technologies.github.io/helm-charts/
-  - argo=https://argoproj.github.io/argo-helm
-  - repo=https://distributed-technologies.github.io/helm-repository/
-  - stable=https://charts.helm.sh/stable
-  - rook=https://charts.rook.io/release
-  - cache=https://t83714.github.io/docker-registry-mirror
-  - grafana=https://grafana.github.io/helm-charts
-  - harbor=https://helm.goharbor.io
-  - jaeger=https://jaegertracing.github.io/helm-charts
-  - common=https://charts.bitnami.com/bitnami
   - kafka=https://strimzi.io/charts/
   - kafkaexport=https://prometheus-community.github.io/helm-charts
   - cp=https://confluentinc.github.io/cp-helm-charts/
-  - thanos=https://kubernetes-charts.banzaicloud.com
-  - traefik=https://helm.traefik.io/traefik
   - vault=https://helm.releases.hashicorp.com
-  - cilium=https://helm.cilium.io/
-  - cortex-helm=https://cortexproject.github.io/cortex-helm-chart
 helm-extra-args: "--timeout 600s"
 validate-chart-schema: false
 validate-maintainers: false

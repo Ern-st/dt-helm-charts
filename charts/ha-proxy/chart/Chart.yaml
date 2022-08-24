@@ -1,4 +1,0 @@
-apiVersion: v2
-name: ha-proxy
-description: A Helm chart for a haproxy that loadbalances the kubernetes api-server
-version: 0.1.3
