@@ -11,6 +11,7 @@ chart-dirs:
   - charts/ntp
   - charts/vault
   - charts/squid
+  - charts/tenant-base
 chart-repos:
   - kafka=https://strimzi.io/charts/
   - kafkaexport=https://prometheus-community.github.io/helm-charts
