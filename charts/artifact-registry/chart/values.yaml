@@ -22,8 +22,8 @@ helmServer:
   affinity: {}
   dataVolume:
     size: 1G
-    storageClass: local-storage
-    accessMode: ReadWriteMany
+    storageClass: standard
+    accessMode: ReadWriteOnce
 
 imageRegistry:
   replicaCount: 1
