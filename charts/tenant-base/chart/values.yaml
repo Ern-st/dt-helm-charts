@@ -64,4 +64,10 @@ ports:
 
 # TODO extend with Kafka topics
 
-# TODO extend with external Secrets
+secretStore:
+  name: default
+  kind: ClusterSecretStore
+
+secrets: []
+#  - name: token
+#    key: secret/tenant-foobar/token
