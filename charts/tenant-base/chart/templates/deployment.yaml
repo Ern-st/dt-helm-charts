@@ -42,6 +42,13 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- toYaml .Values.volumeMounts | nindent 12 }}
+          {{- with .Values.secrets }}
+          envFrom:
+            {{- range . }}
+            - secretRef:
+                name: {{ include "chart.fullname" $ }}-{{ .name }}
+            {{- end }}
+          {{- end }}
 {{- with .Values.extraContainers }}
 {{ tpl . $ | indent 8 }}
 {{- end }}
