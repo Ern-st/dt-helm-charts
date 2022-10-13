@@ -1,0 +1,5 @@
+apiVersion: v2
+name: tenant-base
+description: A basic Helm chart for tenants
+type: application
+version: 0.1.0
