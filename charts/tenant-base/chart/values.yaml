@@ -1,73 +1,109 @@
-image:
-  repository: ghcr.io/stefanprodan/podinfo
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: 6.2.1
+# Allows for renaming of the chart, this is advised since the pods would include 'tenant-base' as the name otherwise.
+fullnameOverride: foobar
 
-imagePullSecrets: []
+# A list of deployments, this allows for multiple deployments in the same chart.
+deployments:
+  # Name of the deployments - this is appended on the deployment and service name.
+  - name: podinfo
+    image:
+      # The repository containing the image
+      repository: ghcr.io/stefanprodan/podinfo
+      # The pullPolicy
+      # * IfNotPresent - If the image is not cached on the device
+      # * Always       - Will always try to fetch the newest image
+      # * Never        - Will not try to fetch an image - if image is not present on the machine startup fails
+      pullPolicy: IfNotPresent
+      # The image tag
+      tag: 6.2.1
 
-replicaCount: 1
+    # The name of the secret that contains the credentials for private image repositories.
+    imagePullSecrets:
+      []
+      # - name: foobar-creds
 
-livenessProbe:
-  httpGet:
-    path: /healthz
-    port: 9898
+    # The amount of replicas wanted of this container
+    replicaCount: 3
 
-readinessProbe:
-  httpGet:
-    path: /healthz
-    port: 9898
+    # Liveness probes are used to determine what state the application is in, and allows k8s to remedy a broken state, by e.g. restarting the pod.
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 9898
 
-volumes: []
-#  - name: cache-volume
-#    emptyDir: {}
+    # Readiness probes lets k8s know when a pod is ready to accept traffic.
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 9898
 
-volumeMounts: []
-#  - mountPath: /cache
-#    name: cache-volume
+    # The volumes list defines what types of volumes to provide to the pod.
+    # In general we only recommend using the following:
+    # * configMaps https://kubernetes.io/docs/concepts/storage/volumes/#configmap
+    # * secrets https://kubernetes.io/docs/concepts/storage/volumes/#secret
+    # * emptyDir https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+    # * persistentVolumeClaim (PVC) https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim
+    volumes: []
+    #  - name: cache-volume
+    #    emptyDir: {}
+    #  - name: configMap
+    #    configMaps:
+    #      name: foobar
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+    # The volumes defined above must be mounted in the pod on a specified path.
+    volumeMounts: []
+    #  - mountPath: /cache
+    #    name: cache-volume
 
-## Enable an Specify container in extraContainers.
-extraContainers: ""
-# extraContainers: |
-#   - name: extra-container
-#     image: stefanprodan/podinfo:latest
-#     ports:
-#       - name: http
-#         containerPort: 80
+    # This allows the user to define the resources needed to run the deployment.
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user.
+    resources:
+      {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
 
-## Volumes that can be used in init containers that will not be mounted to deployment pods
-extraContainerVolumes: []
-  # - name: empty-dir-volume
-  #   emptyDir: {}
+    # The ports on the pod and the equal port on the service and their protocol.
+    ports:
+      - podPortName: http
+        podPort: 9898
+        servicePortName: http
+        servicePort: 80
+        protocol: TCP
 
-service:
-  type: ClusterIP
+    # A list of secrets to fetch from the vault and mounted on the main pod.
+    secrets:
+      []
+      # - name: token
+      #   key: secret/tenant-foobar/token
 
-ports:
-  - podPortName: http
-    podPort: 9898
-    servicePortName: http
-    servicePort: 80
-    protocol: TCP
+# The configMap allows for storage of non secret configurations.
+configMaps:
+  []
+  # - name: foobar
+  #   content:
+  #     debug: true
+  #     bar-config.ini: |
+  #       apiKey: qwertyuiop1234567890
 
-# TODO extend with Kafka topics
+# Bucket claims allows for the creation of a s3 object storage,
+# The bucketClaim creates a secret and configMap that needs to be mounted on the pod that will use it.
+# The name of the secret and configMap is <name>-bucket.
+bucketClaims:
+  # - name: foobar
 
+# Persistent Volume claims allows for the creation of a volume that will persist even if the pod it's mounted on is destroyed.
+persistentVolumeClaims:
+  # - name: foobar
+  #   size: 8Gi
+  #   # Optional
+  #   storageClassName: standard
+
+# This is a reference to the clusterSecretStore located on the cluster.
 secretStore:
   name: default
   kind: ClusterSecretStore
-
-secrets: []
-#  - name: token
-#    key: secret/tenant-foobar/token
+# TODO extend with Kafka topics

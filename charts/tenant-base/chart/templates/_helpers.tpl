@@ -60,3 +60,17 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+template for topologySpredConstrains
+*/}}
+{{- define "chart.topologySpreadConstrains" -}}
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        {{- include "chart.selectorLabels" .root | nindent 8 }}
+        app.kubernetes.io/app: {{ .values.name }}
+{{- end }}

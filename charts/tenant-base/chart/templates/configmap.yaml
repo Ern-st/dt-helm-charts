@@ -1,0 +1,9 @@
+{{- range .Values.configMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
+data:
+  {{- .content | toYaml | nindent 2 }}
+{{ end -}}
