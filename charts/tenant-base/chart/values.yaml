@@ -110,4 +110,14 @@ persistentVolumeClaims:
 secretStore:
   name: default
   kind: ClusterSecretStore
-# TODO extend with Kafka topics
+
+# List of Kafka topics to create.
+# Note: The example shows the only supported configuration fields of a Kafka topic with the default values.
+# If you need to do more advanced configuration of a Kafka topics, please contact the maintainers, so they can add support for the requested configuration field.
+kafkaTopics: []
+#  - name: "example-topic"  #(required)
+#    replicas: 3
+#    partitions: 1
+#    retention:
+#      ms: 604800000
+#      bytes: -1
