@@ -74,6 +74,10 @@ deployments:
         servicePort: 80
         protocol: TCP
 
+    networkPolicy:
+      ingress: []
+      egress: []
+
     # A list of secrets to fetch from the vault and mounted on the main pod.
     secrets:
       []

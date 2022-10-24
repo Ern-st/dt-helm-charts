@@ -132,3 +132,39 @@ The `podPort` tell us what port on the pod we want to map to the `servicePort` o
 [`key`](../chart/values.yaml#l81) is the path in the secret store where the secret is located.
 
 This list also adds the secret to the pod as environment variables.
+
+## `networkPolicy`
+
+`networkPolicy` controls how traffic can flow to (`ingress`) and from (`egress`) the pods created by the deployment.
+
+Please also read Kubernetes documentation on [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
+
+Example:
+```yaml
+deployments:
+  - name: podinfo
+
+    ports:
+      - podPortName: http
+        podPort: 9898
+        servicePortName: http
+        servicePort: 80
+        protocol: TCP
+
+    networkPolicy:
+      ingress:
+        - labels:
+            app.kubernetes.io/name: foo
+          ports:
+            - http
+      egress:
+        - labels:
+            app.kubernetes.io/name: foo
+          ports:
+            - protocol: TCP
+              port: 8080
+```
+
+This would allow traffic to flow from pods with the label `app.kubernetes.io/name: foo` to the pods created by the deployment on the port defined with `podPortName: http` in `ports`.
+
+It would also allow traffic to flow from the pods creatd by this deployment to pods with the label `app.kubernetes.io/name: foo` on port `8080/TCP`.

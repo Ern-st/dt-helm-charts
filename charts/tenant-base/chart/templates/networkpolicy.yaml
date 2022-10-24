@@ -1,0 +1,54 @@
+{{- range .Values.deployments }}
+{{- if .networkPolicy }}
+{{- if or .networkPolicy.ingress .networkPolicy.egress }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
+  labels:
+    {{- include "chart.labels" $ | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "chart.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/app: {{ .name }}
+  policyTypes:
+    {{- if .networkPolicy.ingress }}
+    - Ingress
+    {{- end }}
+    {{- if .networkPolicy.egress }}
+    - Egress
+    {{- end }}
+  {{- if .networkPolicy.ingress }}
+  ingress:
+    {{- $ports := .ports }}
+    {{- range .networkPolicy.ingress }}
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- toYaml .labels | nindent 14 }}
+      ports:
+        {{- range .ports }}
+          {{- $port := . }}
+          {{- range $ports }}{{ if eq .podPortName $port }}{{ $port = . }}{{ end }}{{ end }}
+        - protocol: {{ $port.protocol }}
+          port: {{ $port.podPort }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if .networkPolicy.egress }}
+  egress:
+    {{- range .networkPolicy.egress }}
+    - to:
+        - podSelector:
+            matchLabels:
+              {{- toYaml .labels | nindent 14 }}
+      ports:
+        {{- range .ports }}
+        - {{ . | toYaml | indent 10 | trim }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
