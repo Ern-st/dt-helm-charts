@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":semanticCommitsDisabled"
+  ],
+  "enabledManagers": ["helmv3"],
+  "timezone": "Europe/Copenhagen",
+  "schedule": [
+    "after 08:00 every weekday",
+    "before 15:00 every weekday"
+  ]
+}
