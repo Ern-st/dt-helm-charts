@@ -9,5 +9,6 @@
   "schedule": [
     "after 08:00 every weekday",
     "before 15:00 every weekday"
-  ]
+  ],
+  "bumpVersion": "patch"
 }
