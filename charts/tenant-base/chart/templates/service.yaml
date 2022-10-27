@@ -1,17 +1,20 @@
+{{- range .Values.deployments }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "chart.fullname" . }}
+  name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
   labels:
-    {{- include "chart.labels" . | nindent 4 }}
+    {{- include "chart.labels" $ | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
-{{- range .Values.ports }}
+{{- range .ports }}
     - port: {{ .servicePort }}
       name: {{ .servicePortName }}
       targetPort: {{ .podPortName }}
       protocol: {{ .protocol }}
 {{- end }}
   selector:
-    {{- include "chart.selectorLabels" . | nindent 4 }}
+    {{- include "chart.selectorLabels" $ | nindent 4 }}
+    app.kubernetes.io/app: {{ .name }}
+{{ end -}}
