@@ -119,5 +119,5 @@ kafkaTopics: []
 #    replicas: 3
 #    partitions: 1
 #    retention:
-#      ms: 604800000
+#      ms: 604800000 # 7 days
 #      bytes: -1
