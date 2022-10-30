@@ -12,7 +12,8 @@ spec:
   replicas: {{  .replicas }}
   config: 
     # https://kafka.apache.org/documentation/#topicconfigs
-    retention.ms: {{ .retention.ms | default  604800000 }} # 7 days
-    retention.bytes: {{ .retention.bytes | default -1 }}
+    {{- $retention := .retention | default dict }}
+    retention.ms: {{ $retention.ms | default  604800000 }}
+    retention.bytes: {{ $retention.bytes | default -1 }}
 ---
 {{- end }}
