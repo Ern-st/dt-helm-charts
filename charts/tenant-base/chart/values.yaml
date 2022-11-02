@@ -18,8 +18,7 @@ deployments:
 
     # The name of the secret that contains the credentials for private image repositories.
     imagePullSecrets:
-      []
-      # - name: foobar-creds
+      - name: acr-token
 
     # The amount of replicas wanted of this container
     replicaCount: 3
