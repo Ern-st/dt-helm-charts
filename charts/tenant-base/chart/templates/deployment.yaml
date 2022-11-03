@@ -1,9 +1,9 @@
-{{- range .Values.deployments }}
+{{- range $name, $val := .Values.deployments }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
+  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
   labels:
     {{- include "chart.labels" $ | nindent 4 }}
 spec:
@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "chart.selectorLabels" $ | nindent 6 }}
-      app.kubernetes.io/app: {{ .name }}
+      app.kubernetes.io/app: {{ $name }}
   template:
     metadata:
       {{- with .podAnnotations }}
@@ -20,15 +20,15 @@ spec:
       {{- end }}
       labels:
         {{- include "chart.selectorLabels" $ | nindent 8 }}
-        app.kubernetes.io/app: {{ .name }}
+        app.kubernetes.io/app: {{ $name }}
     spec:
-      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" .) | nindent 6 }}
+      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $name) | nindent 6 }}
       {{- with .imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .name }}
+        - name: {{ $name }}
           securityContext:
             {{- toYaml .securityContext | nindent 12 }}
           image: {{ printf "%s:%s" .image.repository .image.tag }}
@@ -51,7 +51,7 @@ spec:
           envFrom:
             {{- range . }}
             - secretRef:
-                name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
+                name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
             {{- end }}
           {{- end }}
       volumes:

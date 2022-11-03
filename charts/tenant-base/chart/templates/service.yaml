@@ -1,9 +1,9 @@
-{{- range .Values.deployments }}
+{{- range $name, $val := .Values.deployments }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ printf "%s-%s" (include "chart.fullname" $) .name }}
+  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
   labels:
     {{- include "chart.labels" $ | nindent 4 }}
 spec:
@@ -16,5 +16,5 @@ spec:
 {{- end }}
   selector:
     {{- include "chart.selectorLabels" $ | nindent 4 }}
-    app.kubernetes.io/app: {{ .name }}
+    app.kubernetes.io/app: {{ $name }}
 {{ end -}}
