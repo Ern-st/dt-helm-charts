@@ -1,4 +1,5 @@
 {{- range $name, $val := .Values.deployments }}
+{{- if .enabled }}
 ---
 apiVersion: v1
 kind: Service
@@ -17,4 +18,5 @@ spec:
   selector:
     {{- include "chart.selectorLabels" $ | nindent 4 }}
     app.kubernetes.io/app: {{ $name }}
+{{ end -}}
 {{ end -}}
