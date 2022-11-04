@@ -1,4 +1,6 @@
 {{- range $name, $val := .Values.deployments }}
+{{- if .enabled }}
+
 {{- if .networkPolicy }}
 {{- if or .networkPolicy.ingress .networkPolicy.egress }}
 apiVersion: networking.k8s.io/v1
@@ -49,6 +51,7 @@ spec:
         {{- end }}
     {{- end }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

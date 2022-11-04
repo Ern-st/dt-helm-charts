@@ -1,4 +1,6 @@
 {{- range $name, $val := .Values.deployments }}
+{{- if .enabled }}
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,3 +59,4 @@ spec:
       volumes:
         {{- toYaml .volumes | nindent 8 }}
 {{ end -}}
+{{- end }}
