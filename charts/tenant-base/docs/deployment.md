@@ -4,12 +4,21 @@ A deployment is used to describe how we want to deploy one or more containers in
 
 > [kubernetes.io#Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
-The [deployments list](../chart/values.yaml#l5) is used to describe one or more deployments that we want to run on kubernetes, to describe a deployment we need to set some values:
+The [deployments](../chart/values.yaml#l5) is used to describe one or more deployments that we want to run on kubernetes, to describe a deployment we need to set some values:
 
-## name
+A deployment is started by making a key in the deployments object, this key can be anything and will be used as part of the name for the deployment.
+
+```yaml
+deployments:
+  foo: #<-- this will be the name of the deployments
+    image: foo-bar
+    ...
+```
 
 [`name`](../chart/values.yaml#l7) is the name of the deployment, this should be descriptive of what this deployment deploys.
 This name is also being used to in the name of the pods, like we saw in [fullnameOverride](../README.md#fullenameoverride).
+
+Name is also the key of the deployment object.
 
 If we set the name of the deployment to `foo` the name of the pods now contains foo as part of their name.
 
@@ -18,6 +27,8 @@ podinfo-tenant-base-foo-57c9487678-dncs8
 podinfo-tenant-base-foo-57c9487678-kg9j7
 podinfo-tenant-base-foo-57c9487678-shlmj
 ```
+
+This value of they key will then contain the rest of the deployment configuration.
 
 ## image
 
@@ -140,6 +151,7 @@ This list also adds the secret to the pod as environment variables.
 Please also read Kubernetes documentation on [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
 
 Example:
+
 ```yaml
 deployments:
   - name: podinfo

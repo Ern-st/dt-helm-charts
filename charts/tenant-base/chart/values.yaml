@@ -4,7 +4,7 @@ fullnameOverride: foobar
 # A list of deployments, this allows for multiple deployments in the same chart.
 deployments:
   # Name of the deployments - this is appended on the deployment and service name.
-  - name: podinfo
+  podinfo:
     image:
       # The repository containing the image
       repository: ghcr.io/stefanprodan/podinfo

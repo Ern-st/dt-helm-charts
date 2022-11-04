@@ -72,5 +72,5 @@ topologySpreadConstraints:
     labelSelector:
       matchLabels:
         {{- include "chart.selectorLabels" .root | nindent 8 }}
-        app.kubernetes.io/app: {{ .values.name }}
+        app.kubernetes.io/app: {{ .name }}
 {{- end }}
