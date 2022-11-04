@@ -1,4 +1,4 @@
-{{- range .Values.kafkaTopics }}
+{{- range .Values.kafkaTopics.create }}
 # https://strimzi.io/docs/operators/latest/configuring.html#type-KafkaTopic-reference
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic

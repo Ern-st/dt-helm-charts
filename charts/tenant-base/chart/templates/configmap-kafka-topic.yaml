@@ -1,0 +1,22 @@
+{{- range .Values.kafkaTopics.access }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafkatopic--{{ .name }}--accessed-by--{{.applicationName}}
+  labels: 
+    kyverno.digest/configmap: "generate-cilium-network-policy-for-kafka-topic"
+  annotations:
+    kubernetes.io/description: "ConfigMap digested by Kyverno to give the application {{ .applicationName }} in the {{ .namespace }} access to the KafkaTopic {{ .name }}"
+data:
+  config: |
+    {
+      "application_namespace": "{{ .namespace }}",
+      "application_name": "{{ .applicationName }}",
+      "kafka_topic_name": "{{ .name }}",
+      "policy_rules": {
+        "produce": {{ .produce }},
+        "consume": {{ .consume }}
+      }
+    }
+{{ end -}}
