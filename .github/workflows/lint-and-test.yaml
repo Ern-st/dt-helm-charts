@@ -11,6 +11,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: yamllint
+          repository: distributed-technologies/gha-yamllint
+
       - name: Set up python
         uses: actions/setup-python@v2
         with:
@@ -30,14 +37,15 @@ jobs:
             echo "::set-output name=changed::true"
             echo "::set-output name=changed_charts::$charts"
           fi
+
       - name: Run chart-testing (lint)
-        run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
+        run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./yamllint/config.yaml
 
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@v2.7.0
         with:
-          minikube version: 'v1.27.1'
-          kubernetes version: 'v1.25.0'
+          minikube version: "v1.27.1"
+          kubernetes version: "v1.25.0"
           github token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run chart-testing (install)
