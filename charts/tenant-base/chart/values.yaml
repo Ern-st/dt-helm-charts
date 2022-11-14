@@ -1,3 +1,4 @@
+---
 # Allows for renaming of the chart, this is advised since the pods would include 'tenant-base' as the name otherwise.
 fullnameOverride: foobar
 
@@ -98,27 +99,37 @@ configMaps:
 # The bucketClaim creates a secret and configMap that needs to be mounted on the pod that will use it.
 # The name of the secret and configMap is <name>-bucket.
 bucketClaims:
-  # - name: foobar
+# - name: foobar
 
 # Persistent Volume claims allows for the creation of a volume that will persist even if the pod it's mounted on is destroyed.
 persistentVolumeClaims:
-  # - name: foobar
-  #   size: 8Gi
-  #   # Optional
-  #   storageClassName: standard
-
+# - name: foobar
+#   size: 8Gi
+#   # Optional
+#   storageClassName: standard
 # This is a reference to the clusterSecretStore located on the cluster.
 secretStore:
   name: default
   kind: ClusterSecretStore
-
-# List of Kafka topics to create.
-# Note: The example shows the only supported configuration fields of a Kafka topic with the default values.
-# If you need to do more advanced configuration of a Kafka topics, please contact the maintainers, so they can add support for the requested configuration field.
-kafkaTopics: []
-#  - name: "example-topic"  #(required)
-#    replicas: 3
-#    partitions: 1
-#    retention:
-#      ms: 604800000 # 7 days
-#      bytes: -1
+kafkaTopics:
+  # List of Kafka topics to create. You still need to configure the access to the topic in the 'access' block to give applications access to produce or consume to a topic.
+  # In practice this generates a KafkaTopic resource in the namespace of the tenant which is the copied to the namespace of the Kafka cluster. This means that the KafkaTopic resource in the tenant namespace will not become Ready even tough its clone in Ready.
+  # Requirements: The name of the topics must include the tenants namespace name as prefix. This is to avoid naming collisions between different tenants' Kafka topics.
+  #
+  #
+  # Note: The example shows the only supported configuration fields of a Kafka topic with the default values.
+  # If you need to do more advanced configuration of a Kafka topics, please contact the maintainers, so they can add support for the requested configuration field.
+  create: []
+  #  - name: "example-topic"                  #(required)
+  #    replicas: 3
+  #    partitions: 1
+  #    retention:
+  #      ms: 604800000                        #7days
+  #      bytes: -1                            #No byte retention
+  #  List of Kafka topics to access.
+  access: []
+  #  - name: "tenant-test-topic"              #(required)
+  #    applicationName: "kafka-test-produce"  #(required)
+  #    namespace: "tenant-test"               #(required)
+  #    produce: false                         #(required)
+  #    consume: false                         #(required)
