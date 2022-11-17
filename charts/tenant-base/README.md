@@ -5,7 +5,6 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 The chart is made in a way that allows for creation of a number of resources using only the `values.yaml` file,
 the chart supports the creation of the following resources in some way:
 
-- [ObjectBucketClaims](https://rook.io/docs/rook/v1.9/ceph-object-bucket-claim.html)
 - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
 - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 - [ExternalSecrets](https://external-secrets.io/v0.6.0/api/externalsecret/)
@@ -72,18 +71,6 @@ See [deployment](docs/deployment.md)
 
 A config map is an object that stores configurations which can be mounted in to one or more pods either as environment variables or as files.
 The config map can contain multiple configs at once, both [entire files](chart/values.yaml#l89) or [`single values`](chart/values.yaml#l88).
-
-### BucketClaims
-
-> [rook.io#ObjectBucketClaim](https://rook.io/docs/rook/v1.9/ceph-object-bucket-claim.html)
-
-[`BucketClaims`](chart/values.yaml#l95) allows for the creation of a s3 object storage,
-The bucketClaim creates a secret and configMap that needs to be mounted on the pod that will use it.
-The name of the secret and configMap is `<release-name>-<chart-name>-<name>`.
-
-All we need to do is to supply a list of names for buckets that we want, this will then request a bucket from Ceph.
-To provide a pod with the credentials needed to access the bucket, the `ObjectBuckerClaim` provides a secret and a configMap that we will have to mount in the relevant deployments,
-This is done by adding the following the documentation regarding [volumes](docs/deployment.md#volumes) and [volumeMounts](docs/deployment.md#volumemounts).
 
 ### PersistentVolumeClaims
 
