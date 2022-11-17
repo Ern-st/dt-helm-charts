@@ -7,7 +7,6 @@ the chart supports the creation of the following resources in some way:
 
 - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
 - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-- [ExternalSecrets](https://external-secrets.io/v0.6.0/api/externalsecret/)
 - [PersistentVolumeClaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
 - [Services](https://kubernetes.io/docs/concepts/services-networking/service/)
 
@@ -43,22 +42,6 @@ Now `tenant-base` has been replaced with `foobar`.
 
 > The structure of the name is built like this `<release-name>-<chart-name or fullnameOverride>-<deployment-name>-<uid>`
 
-### SecretStore
-
->[external-secrets.io#clustersecretstore](https://external-secrets.io/v0.6.0/api-clustersecretstore/)
-
-The secretStore resources comes from the external-secrets application, the secretStore defines how we want to interact and authenticate with any number of secrets stores like Hashicorp vault or Azure key vault.
-
-[`secretStore`](chart/values.yaml#l125) is where we define the reference of the secretStore we want to use in the external secrets.
-
-[`name`](chart/values.yaml#l126) is the name of the secretStore we want to use.
-
-[`kind`](chart/values.yaml#l127) is the kind of the secretStore we wish to use, this can be either `SecretStore` or `ClusterSecretStore`.
-
-> This does not create the secretStore, this is a reference to already existing resources.
-
-These values will be used in the creation of [external-secrets](https://external-secrets.io/v0.5.9/api-externalsecret/) in the [deployment section](#deployment).
-
 ### Deployments
 
 See [deployment](docs/deployment.md)
@@ -82,4 +65,3 @@ Persistent volume claims (PVC) is a volume that persists even if the pod it's mo
 
 - The [`name`](chart/values.yaml#l101) for the PVC
 - The [`size`](chart/values.yaml#l102) of the PVC
-- (optional) The [`storageClass`](chart/values.yaml#l102) the PVC will use.

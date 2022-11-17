@@ -11,11 +11,6 @@ deployments:
     image:
       # The repository containing the image
       repository: ghcr.io/stefanprodan/podinfo
-      # The pullPolicy
-      # * IfNotPresent - If the image is not cached on the device
-      # * Always       - Will always try to fetch the newest image
-      # * Never        - Will not try to fetch an image - if image is not present on the machine startup fails
-      pullPolicy: IfNotPresent
       # The image tag
       tag: 6.2.1
 
@@ -88,10 +83,6 @@ persistentVolumeClaims:
 # - name: foobar
 #   size: 8Gi
 
-# This is a reference to the clusterSecretStore located on the cluster.
-secretStore:
-  name: default
-  kind: ClusterSecretStore
 kafkaTopics:
   # List of Kafka topics to create. You still need to configure the access to the topic in the 'access' block to give applications access to produce or consume to a topic.
   # In practice this generates a KafkaTopic resource in the namespace of the tenant which is the copied to the namespace of the Kafka cluster. This means that the KafkaTopic resource in the tenant namespace will not become Ready even tough its clone in Ready.
