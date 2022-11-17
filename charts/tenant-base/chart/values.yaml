@@ -56,18 +56,6 @@ deployments:
     #  - mountPath: /cache
     #    name: cache-volume
 
-    # This allows the user to define the resources needed to run the deployment.
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user.
-    resources:
-      {}
-      # limits:
-      #   cpu: 100m
-      #   memory: 128Mi
-      # requests:
-      #   cpu: 100m
-      #   memory: 128Mi
-
     # The ports on the pod and the equal port on the service and their protocol.
     ports:
       - podPortName: http

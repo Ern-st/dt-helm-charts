@@ -114,16 +114,6 @@ volumeMounts:
     subPath: tmp
 ```
 
-## Resources
-
-> [kubernetes.io#resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)
-
-[`resources`](../chart/values.yaml#l60) describes the available resources (CPU and memory) for the containers, this is done by defining requests and limits.
-
-Requests describes the resources that the container need to be able to run, this gives kubernetes the ability to intelligently choose the most suitable node to create the pod in and reserves the resources requested.
-
-Limits is the max amount of resources a container is allowed to use.
-
 ## Ports
 
 [`ports`](../chart/values.yaml#l70) is a list of objects, the objects in the list consists of two ports, the [podPort](../chart/values.yaml#l72) and the [servicePort](../chart/values.yaml#l74).
