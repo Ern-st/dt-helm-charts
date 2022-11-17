@@ -87,8 +87,7 @@ configMaps:
 persistentVolumeClaims:
 # - name: foobar
 #   size: 8Gi
-#   # Optional
-#   storageClassName: standard
+
 # This is a reference to the clusterSecretStore located on the cluster.
 secretStore:
   name: default

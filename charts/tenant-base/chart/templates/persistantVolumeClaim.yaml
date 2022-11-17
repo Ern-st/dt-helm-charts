@@ -11,5 +11,4 @@ spec:
   resources:
     requests:
       storage: {{ .size }}
-  storageClassName: {{ .storageClassName | default "ceph-block"}}
 {{ end -}}
