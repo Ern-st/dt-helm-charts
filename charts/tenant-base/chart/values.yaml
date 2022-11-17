@@ -14,10 +14,6 @@ deployments:
       # The image tag
       tag: 6.2.1
 
-    # The name of the secret that contains the credentials for private image repositories.
-    imagePullSecrets:
-      - name: acr-token
-
     # The amount of replicas wanted of this container
     replicaCount: 3
 
