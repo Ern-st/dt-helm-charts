@@ -17,18 +17,6 @@ deployments:
     # The amount of replicas wanted of this container
     replicaCount: 3
 
-    # Liveness probes are used to determine what state the application is in, and allows k8s to remedy a broken state, by e.g. restarting the pod.
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 9898
-
-    # Readiness probes lets k8s know when a pod is ready to accept traffic.
-    readinessProbe:
-      httpGet:
-        path: /healthz
-        port: 9898
-
     # The volumes list defines what types of volumes to provide to the pod.
     # In general we only recommend using the following:
     # * configMaps https://kubernetes.io/docs/concepts/storage/volumes/#configmap
