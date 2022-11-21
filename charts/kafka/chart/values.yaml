@@ -8,7 +8,8 @@ strimzi-kafka-operator:
 cluster:
   name: my-cluster
   kafka:
-    version: 2.8.0
+    # Supported versions 3.1.0, 3.1.1, 3.1.2, 3.2.0, 3.2.1, 3.2.3
+    version: 3.1.2
     storage:
       class: standard
       size: 500Mi
