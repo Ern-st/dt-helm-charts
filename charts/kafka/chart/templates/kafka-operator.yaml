@@ -1,3 +1,4 @@
+{{ if not .Values.onlyOperator }}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
@@ -134,3 +135,4 @@ spec:
     {{- if .Values.cluster.kafkaExporter.resources }}
     resources: {{- .Values.cluster.kafkaExporter.resources | toYaml | nindent 6 }}
     {{- end }}
+{{ end }}

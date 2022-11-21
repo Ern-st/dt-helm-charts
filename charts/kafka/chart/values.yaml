@@ -1,4 +1,6 @@
 env: prod
+# Install only the Operators,the CRDS and the cluster wide resources
+onlyOperator: false
 # Docs https://github.com/strimzi/strimzi-kafka-operator/blob/main/helm-charts/helm3/strimzi-kafka-operator/values.yaml
 strimzi-kafka-operator:
   generateNetworkPolicy: false
