@@ -11,17 +11,8 @@ deployments:
     image:
       # The repository containing the image
       repository: ghcr.io/stefanprodan/podinfo
-      # The pullPolicy
-      # * IfNotPresent - If the image is not cached on the device
-      # * Always       - Will always try to fetch the newest image
-      # * Never        - Will not try to fetch an image - if image is not present on the machine startup fails
-      pullPolicy: IfNotPresent
       # The image tag
       tag: 6.2.1
-
-    # The name of the secret that contains the credentials for private image repositories.
-    imagePullSecrets:
-      - name: acr-token
 
     # The amount of replicas wanted of this container
     replicaCount: 3
@@ -56,18 +47,6 @@ deployments:
     #  - mountPath: /cache
     #    name: cache-volume
 
-    # This allows the user to define the resources needed to run the deployment.
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user.
-    resources:
-      {}
-      # limits:
-      #   cpu: 100m
-      #   memory: 128Mi
-      # requests:
-      #   cpu: 100m
-      #   memory: 128Mi
-
     # The ports on the pod and the equal port on the service and their protocol.
     ports:
       - podPortName: http
@@ -95,22 +74,11 @@ configMaps:
   #     bar-config.ini: |
   #       apiKey: qwertyuiop1234567890
 
-# Bucket claims allows for the creation of a s3 object storage,
-# The bucketClaim creates a secret and configMap that needs to be mounted on the pod that will use it.
-# The name of the secret and configMap is <name>-bucket.
-bucketClaims:
-# - name: foobar
-
 # Persistent Volume claims allows for the creation of a volume that will persist even if the pod it's mounted on is destroyed.
 persistentVolumeClaims:
 # - name: foobar
 #   size: 8Gi
-#   # Optional
-#   storageClassName: standard
-# This is a reference to the clusterSecretStore located on the cluster.
-secretStore:
-  name: default
-  kind: ClusterSecretStore
+
 kafkaTopics:
   # List of Kafka topics to create. You still need to configure the access to the topic in the 'access' block to give applications access to produce or consume to a topic.
   # In practice this generates a KafkaTopic resource in the namespace of the tenant which is the copied to the namespace of the Kafka cluster. This means that the KafkaTopic resource in the tenant namespace will not become Ready even tough its clone in Ready.

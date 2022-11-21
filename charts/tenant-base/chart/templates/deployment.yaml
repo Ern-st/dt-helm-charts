@@ -25,16 +25,14 @@ spec:
         app.kubernetes.io/app: {{ $name }}
     spec:
       {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $name) | nindent 6 }}
-      {{- with .imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: registry-token
       containers:
         - name: {{ $name }}
           securityContext:
             {{- toYaml .securityContext | nindent 12 }}
           image: {{ printf "%s:%s" .image.repository .image.tag }}
-          imagePullPolicy: {{ .image.pullPolicy }}
+          imagePullPolicy: IfNotPresent
           ports:
           {{- range .ports }}
             - name: {{ .podPortName }}
@@ -45,8 +43,6 @@ spec:
             {{- toYaml .livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .readinessProbe | nindent 12 }}
-          resources:
-            {{- toYaml .resources | nindent 12 }}
           volumeMounts:
             {{- toYaml .volumeMounts | nindent 12 }}
           {{- with .secrets }}

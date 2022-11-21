@@ -36,19 +36,7 @@ This value of they key will then contain the rest of the deployment configuratio
 
 [`repository`](../chart/values.yaml#l10) is the URL to the container registry that the container we wish to use is located in.
 
-[`pullPolicy`](../chart/values.yaml#l15) is the rule that defines when we want to pull the image there are three options for this:
-
-* `IfNotPresent`   - This will try to fetch the image if the it's not already located on the node.
-* `Always`         - Will always try to fetch the newest image
-* `Never`          - Will not try to fetch the image - if image is not present on the machine startup fails
-
 [`tag`](../chart/values.yaml#l17) is the version of the image we wish to run, this cannot be `latest`.
-
-## ImagePullSecret
-
-> [kubernetes.io#pull-image-private-registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
-
-[`imagePullSecret`](../chart/values.yaml#l20) is a list of secret references containing the information needed to authenticate with a private container registry.
 
 ## replicaCount
 
@@ -113,16 +101,6 @@ volumeMounts:
     name: cache
     subPath: tmp
 ```
-
-## Resources
-
-> [kubernetes.io#resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)
-
-[`resources`](../chart/values.yaml#l60) describes the available resources (CPU and memory) for the containers, this is done by defining requests and limits.
-
-Requests describes the resources that the container need to be able to run, this gives kubernetes the ability to intelligently choose the most suitable node to create the pod in and reserves the resources requested.
-
-Limits is the max amount of resources a container is allowed to use.
 
 ## Ports
 
