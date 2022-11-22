@@ -1,3 +1,4 @@
+{{ if not .Values.onlyOperator }}
 {{- range .Values.topics }}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
@@ -14,3 +15,4 @@ spec:
   {{- end }}
 ---
 {{- end }}
+{{ end }}
