@@ -4,7 +4,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
+  name: {{ printf "%s-%s" $.Release.Name $name }}
   labels:
     {{- include "chart.labels" (dict "name" $name "values" $val "root" $) | nindent 4 }}
 spec:
@@ -52,7 +52,7 @@ spec:
           envFrom:
             {{- range . }}
             - secretRef:
-                name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
+                name: {{ printf "%s-%s" $name .name }}
             {{- end }}
           {{- end }}
       volumes:
