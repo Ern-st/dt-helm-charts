@@ -31,26 +31,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "chart.labels" -}}
-helm.sh/chart: {{ include "chart.chart" . }}
-{{ include "chart.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-Selector labels
-*/}}
-{{- define "chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "chart.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
 Create the name of the service account to use
 */}}
 {{- define "chart.serviceAccountName" -}}
@@ -59,6 +39,28 @@ Create the name of the service account to use
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+{{/*
+Common labels
+Takes a dictionary contaning containing:
+ - 'name'=<The name to use in the labels>,
+ - 'values'=<The map of the relative values from a loop>,
+ - 'root'=<The root values - used to access ".Release.Name"> - optional - if not present the value will be retrived from .values
+*/}}
+{{- define "chart.labels" -}}
+{{ include "chart.selectorLabels" (dict "name" .name)}}
+app.kubernetes.io/version: {{ .values.image.tag }}
+app.kubernetes.io/part-of: {{ .root.Release.Name }}
+{{- end }}
+
+{{/*
+SelectorLabels
+Takes a dictionary contaning containing: 'name'=string
+*/}}
+{{- define "chart.selectorLabels" -}}
+app.kubernetes.io/name: {{ .name }}
+app.kubernetes.io/instance: {{ .name }}
 {{- end }}
 
 {{/*
@@ -71,6 +73,5 @@ topologySpreadConstraints:
     whenUnsatisfiable: DoNotSchedule
     labelSelector:
       matchLabels:
-        {{- include "chart.selectorLabels" .root | nindent 8 }}
-        app.kubernetes.io/app: {{ .name }}
+        {{- include "chart.selectorLabels" (dict "name" .name) | nindent 8 }}
 {{- end }}
