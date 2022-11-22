@@ -1,5 +1,7 @@
+---
 env: prod
-# Install only the Operators,the CRDS and the cluster wide resources
+# Install only the Operators,the CRDS and the cluster wide resources.
+# If 'strimzi-kafka-operator.enabled' is false, nothing will be deployed if this is false.
 onlyOperator: false
 # Docs https://github.com/strimzi/strimzi-kafka-operator/blob/main/helm-charts/helm3/strimzi-kafka-operator/values.yaml
 strimzi-kafka-operator:
@@ -117,7 +119,7 @@ topics:
   - name: topic-test-1
     partitions: 1
     replicas: 1
-# Topic configuration: https://kafka.apache.org/documentation/#topicconfigs
+    # Topic configuration: https://kafka.apache.org/documentation/#topicconfigs
     config:
       retention.ms: 7200000
       segment.bytes: 1073741824
