@@ -52,9 +52,9 @@ The liveness probe is used to determine whether the container is running, if the
 
 The readiness probe is used to determine if the container is ready to respond to requests.
 
->It is recommended to always supply both liveness and readiness probes.
+This chart configures liveness and readiness probes to check a HTTP endpoint on port `9898`. The endpoint is expected to return with a `200` HTTP code at `/healthz` if the application is ready and healthy.
 
-There are several ways of configuring both of the probes depending on what type of probe e.g. HTTP or CMD, and we would recommend looking at the [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes).
+For ASP.NET Core applications the [AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks) package can be used for adding health check endpoints as explained in [this article](https://andrewlock.net/deploying-asp-net-core-applications-to-kubernetes-part-6-adding-health-checks-with-liveness-readiness-and-startup-probes/#creating-a-custom-health-check)
 
 ## Volumes
 
