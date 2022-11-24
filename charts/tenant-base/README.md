@@ -2,6 +2,8 @@
 
 The tenant base helm chart is a chart that give an easy all in one place to make deployments, it is only designed to make deployments and the resources that could be useful for deployments, like configmaps, pvc's etc.
 
+The name of helm release should be the name of the higher level application that this chart deploys, e.g. if we're deploying a web application and a database, we could call the whole release "wordpress".
+
 The chart is made in a way that allows for creation of a number of resources using only the `values.yaml` file,
 the chart supports the creation of the following resources in some way:
 
@@ -15,32 +17,6 @@ the chart supports the creation of the following resources in some way:
 The `values.yaml` consists of several lists of resources, these are either lists with simple objects e.g. the bucketClaim list only takes a name, or more complex objects like the deployments.
 
 To begin with we will start with the values that are not lists:
-
-### `fullenameOverride`
-
-[`fullnameOverride`](chart/values.yaml#l2) is used to override the name of the chart, the reason this exists is because the name of the chart is `tenant-base` and the name is used in the names of most of the resources, so if we could'nt change the name we would end up with a lot of resources that contains the name of this chart instead of the application the resource actually belong to.
-
-For example if we set `fullnameOverride` to an empty string and use the chart name we get pods that is names:
-
-```bash
-podinfo-tenant-base-podinfo-57c9487678-d6s2z
-podinfo-tenant-base-podinfo-57c9487678-q6lgc
-podinfo-tenant-base-podinfo-57c9487678-x9j6
-```
-
-As we can see `tenant-base` is the middle of the name.
-
-If we set the value of `fullnameOverride` to e.g. `foobar` we would get
-
-```bash
-podinfo-foobar-podinfo-57c9487678-d6s2z
-podinfo-foobar-podinfo-57c9487678-q6lgc
-podinfo-foobar-podinfo-57c9487678-x9j6
-```
-
-Now `tenant-base` has been replaced with `foobar`.
-
-> The structure of the name is built like this `<release-name>-<chart-name or fullnameOverride>-<deployment-name>-<uid>`
 
 ### Deployments
 

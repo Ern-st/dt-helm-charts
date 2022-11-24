@@ -1,7 +1,4 @@
 ---
-# Allows for renaming of the chart, this is advised since the pods would include 'tenant-base' as the name otherwise.
-fullnameOverride: foobar
-
 # A list of deployments, this allows for multiple deployments in the same chart.
 deployments:
   # Name of the deployments - this is appended on the deployment and service name.
