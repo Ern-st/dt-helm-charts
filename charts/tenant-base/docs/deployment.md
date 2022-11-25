@@ -16,7 +16,7 @@ deployments:
 ```
 
 [`name`](../chart/values.yaml#l7) is the name of the deployment, this should be descriptive of what this deployment deploys.
-This name is also being used to in the name of the pods, like we saw in [fullnameOverride](../README.md#fullenameoverride).
+This name is also being used to in the name of the pods.
 
 Name is also the key of the deployment object.
 

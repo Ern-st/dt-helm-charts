@@ -3,14 +3,15 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: {{ .name }}
+  name: {{ printf "%s-%s" $.Release.Name .name }}
   labels:
+    {{- include "chart.selectorLabels" (dict "name" .name) | nindent 4 }}
     strimzi.io/cluster: my-cluster
-spec: 
+spec:
   topicName: {{ .name }}
   partitions: {{ .partitions }}
   replicas: {{  .replicas }}
-  config: 
+  config:
     # https://kafka.apache.org/documentation/#topicconfigs
     {{- $retention := .retention | default dict }}
     retention.ms: {{ $retention.ms | default  604800000 }}
