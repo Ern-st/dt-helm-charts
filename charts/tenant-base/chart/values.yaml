@@ -50,14 +50,17 @@ deployments:
       # - name: token
       #   key: secret/tenant-foobar/token
 
+    # A list of config maps that should be mounted into the main pod as environment variables
+    configMaps:
+      []
+    # - name: foobar
+
 # The configMap allows for storage of non secret configurations.
 configMaps:
   []
-  # - name: foobar
-  #   content:
-  #     debug: true
-  #     bar-config.ini: |
-  #       apiKey: qwertyuiop1234567890
+# - name: foobar
+#   content:
+#     apiKey: qwertyuiop1234567890
 
 # Persistent Volume claims allows for the creation of a volume that will persist even if the pod it's mounted on is destroyed.
 persistentVolumeClaims:

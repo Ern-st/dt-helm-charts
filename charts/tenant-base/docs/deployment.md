@@ -122,6 +122,14 @@ The `podPort` tell us what port on the pod we want to map to the `servicePort` o
 
 This list also adds the secret to the pod as environment variables.
 
+## configMaps
+
+> [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/)
+
+[`ConfigMaps`](../chart/values.yaml#54) is a list that describes which configMaps to mount into the main pod as environment variables.
+
+[`name`](../chart/values.yaml#56) is a arbitrary name for the configmap, that has to match the defined configMap you would like to mount in.
+
 ## `networkPolicy`
 
 `networkPolicy` controls how traffic can flow to (`ingress`) and from (`egress`) the pods created by the deployment.
