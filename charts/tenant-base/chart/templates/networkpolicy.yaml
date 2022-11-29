@@ -1,17 +1,19 @@
 {{- range $name, $val := .Values.deployments }}
 {{- if .enabled }}
+
 {{- if .networkPolicy }}
 {{- if or .networkPolicy.ingress .networkPolicy.egress }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name $name }}
+  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
   labels:
-    {{- include "chart.labels" (dict "name" $name "values" $val "root" $) | nindent 4 }}
+    {{- include "chart.labels" $ | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
-      {{- include "chart.selectorLabels" (dict "name" $name) | nindent 6 }}
+      {{- include "chart.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/app: {{ $name }}
   policyTypes:
     {{- if .networkPolicy.ingress }}
     - Ingress

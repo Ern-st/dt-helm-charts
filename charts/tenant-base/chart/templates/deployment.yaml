@@ -1,17 +1,19 @@
 {{- range $name, $val := .Values.deployments }}
 {{- if .enabled }}
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name $name }}
+  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
   labels:
-    {{- include "chart.labels" (dict "name" $name "values" $val "root" $) | nindent 4 }}
+    {{- include "chart.labels" $ | nindent 4 }}
 spec:
   replicas: {{ .replicaCount }}
   selector:
     matchLabels:
-      {{- include "chart.selectorLabels" (dict "name" $name) | nindent 6 }}
+      {{- include "chart.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/app: {{ $name }}
   template:
     metadata:
       {{- with .podAnnotations }}
@@ -19,7 +21,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "chart.selectorLabels" (dict "name" $name) | nindent 8 }}
+        {{- include "chart.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/app: {{ $name }}
     spec:
       {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $name) | nindent 6 }}
       imagePullSecrets:

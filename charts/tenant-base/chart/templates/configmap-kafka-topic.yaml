@@ -3,8 +3,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kafkatopic--{{ .name }}--accessed-by--{{.applicationName}}
-  labels: 
+  {{- /*
+  Truncate the name as Kyverno sets the name as a lable on the generated CiliumNetworkPolicy and Kubernetes does not allow lable values that are more than 63 chars
+  */}}
+  name: {{ trunc 63 ( printf "%s-%s" "kafkatopic-access" (lower (sha256sum (cat .name .applicationName )))) }}
+  labels:
+    {{- /*
+    This label is what triggers the Kyverno policy and should not be changed unless the ClusterPolicy is changed as well.
+    */}}
     kyverno.digest/configmap: "generate-cilium-network-policy-for-kafka-topic"
   annotations:
     kubernetes.io/description: "ConfigMap digested by Kyverno to give the application {{ .applicationName }} in the {{ .namespace }} access to the KafkaTopic {{ .name }}"
