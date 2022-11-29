@@ -3,7 +3,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name .name }}
+  name: {{ printf "%s-%s" $.Release.Namespace .name }}
   labels:
     {{- include "chart.selectorLabels" (dict "name" .name) | nindent 4 }}
     strimzi.io/cluster: my-cluster
