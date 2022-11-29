@@ -54,11 +54,11 @@ spec:
           envFrom:
           {{- range .secrets }}
           - secretRef:
-              name: {{ printf "%s-%s" $name .name }}
+              name: {{ printf "%s-%s" $.Release.Name .name }}
           {{- end }}
           {{- range .configMaps }}
           - configMapRef:
-              name: {{ printf "%s-%s" $name .name }}
+              name: {{ printf "%s-%s" $.Release.Name .name }}
           {{- end }}
       volumes:
         {{- toYaml .volumes | nindent 8 }}
