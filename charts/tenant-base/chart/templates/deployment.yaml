@@ -51,12 +51,14 @@ spec:
             {{- toYaml .resources | nindent 12 }}
           volumeMounts:
             {{- toYaml .volumeMounts | nindent 12 }}
-          {{- with .secrets }}
           envFrom:
-            {{- range . }}
-            - secretRef:
-                name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
-            {{- end }}
+          {{- range .secrets }}
+          - secretRef:
+              name: {{ printf "%s-%s" $name .name }}
+          {{- end }}
+          {{- range .configMaps }}
+          - configMapRef:
+              name: {{ printf "%s-%s" $name .name }}
           {{- end }}
       volumes:
         {{- toYaml .volumes | nindent 8 }}
