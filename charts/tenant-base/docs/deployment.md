@@ -56,52 +56,6 @@ This chart configures liveness and readiness probes to check a HTTP endpoint on 
 
 For ASP.NET Core applications the [AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks) package can be used for adding health check endpoints as explained in [this article](https://andrewlock.net/deploying-asp-net-core-applications-to-kubernetes-part-6-adding-health-checks-with-liveness-readiness-and-startup-probes/#creating-a-custom-health-check)
 
-## Volumes
-
-> [kubernetes.io#volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
-
-[volumes](../chart/values.yaml#l45) is a list of volumes that we want to make available to all containers in the deployment, there are several types of volumes that can be provided, we aid in the creation of some of those, configMaps, secrets, emptyDir and persistentVolumeClaims.
-
-Some examples on how to make different types of volumes available.
-
-```yaml
-volumes:
-  - name: cache
-    emptyDir: {}
-  - name: configMap
-    configMaps:
-      name: foobar-cm
-  - name: secret
-    secret:
-      secretName: foobar-sec
-  - name: PVC
-    persistentVolumeClaim:
-      claimName: foobar-pvc
-```
-
-All volumes in the example above, except the emptyDir, requires a resources to exist, with the same name used to reference the resource.
-
-## VolumeMounts
-
-> [kubernetes.io#volumeMounts](https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/#configure-a-volume-for-a-pod)
-
-[`volumeMounts`](../chart/values.yaml#l53) is a list of where each object describe what volume and where we want to mount said volume.
-
-`name` is the name of the volumes that we described in the [volumes](../chart/values.yaml#l45) list.
-`mountPath` is the path **in** the container we want to mount the content of the volume.
-
-Doing this will mount the volume on the path, and override anything the already existed on that path (if any),
-To circumvent this behavior we can define a [subPath](https://kubernetes.io/docs/concepts/storage/volumes/#using-subpath) on our volumeMount.
-
-A `subpath` allows us to define a path within the `mountPath` to mount the content, using a `subPath` does not override the content that could exist in the `mountPath`
-
-```yaml
-volumeMounts:
-  - mountPath: /cache
-    name: cache
-    subPath: tmp
-```
-
 ## Ports
 
 [`ports`](../chart/values.yaml#l70) is a list of objects, the objects in the list consists of two ports, the [podPort](../chart/values.yaml#l72) and the [servicePort](../chart/values.yaml#l74).
@@ -129,6 +83,16 @@ This list also adds the secret to the pod as environment variables.
 [`ConfigMaps`](../chart/values.yaml#54) is a list that describes which configMaps to mount into the main pod as environment variables.
 
 [`name`](../chart/values.yaml#56) is a arbitrary name for the configmap, that has to match the defined configMap you would like to mount in.
+
+## PVCS
+
+> [PeristantVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
+
+[PVCS](../chart/values.yaml#43) A list of PVCs that should be mounted as a folder in the main pod
+
+[name](../chart/values.yaml#45) - Name of the PVC defined in the persistentVolumesClaims list on line ~71
+
+[path](../chart/values.yaml#46) - The path where the folder should be mounted. NOTE! the WILL remove the content of the folder on the host, if it exists already, so aim to choose a path that is know empty.
 
 ## `networkPolicy`
 

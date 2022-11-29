@@ -47,7 +47,10 @@ spec:
           resources:
             {{- toYaml .resources | nindent 12 }}
           volumeMounts:
-            {{- toYaml .volumeMounts | nindent 12 }}
+            {{- range .pvcs }}
+            - name: {{ .name }}-volume
+              mountPath: {{ .path }}
+            {{- end }}
           envFrom:
           {{- range .secrets }}
           - secretRef:
@@ -58,6 +61,10 @@ spec:
               name: {{ printf "%s-%s" $.Release.Name .name }}
           {{- end }}
       volumes:
-        {{- toYaml .volumes | nindent 8 }}
+        {{- range .pvcs }}
+        - name: {{ .name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" $.Release.Name .name }}
+        {{- end }}
 {{ end -}}
 {{- end }}
