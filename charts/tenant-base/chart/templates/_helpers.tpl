@@ -7,7 +7,9 @@ Takes a dictionary contaning containing:
 */}}
 {{- define "chart.labels" -}}
 {{ include "chart.selectorLabels" (dict "name" .name)}}
+{{- if .values }}
 app.kubernetes.io/version: {{ .values.image.tag }}
+{{- end }}
 app.kubernetes.io/part-of: {{ .root.Release.Name }}
 {{- end }}
 

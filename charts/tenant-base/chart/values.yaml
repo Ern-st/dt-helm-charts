@@ -4,7 +4,7 @@ deployments:
   # Name of the deployments - this is appended on the deployment and service name.
   podinfo:
     # Enable or disable this deployment
-    enabled: true
+    enabled: false
     image:
       # The repository containing the image
       repository: ghcr.io/stefanprodan/podinfo
@@ -30,7 +30,6 @@ deployments:
     secrets:
       []
       # - name: token
-      #   key: secret/tenant-foobar/token
 
     # A list of config maps that should be mounted into the main pod as environment variables
     configMaps:
@@ -44,6 +43,12 @@ deployments:
       []
       # - name: foobar
       #   path: /tmp/foo
+
+# A list of secrets to fetch from the vault and mounted on the main pod.
+secrets:
+  []
+  # - name: token
+  #   key: secret/tenant-foobar/token
 
 # The configMap allows for storage of non secret configurations.
 configMaps:

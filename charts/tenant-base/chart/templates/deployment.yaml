@@ -52,14 +52,14 @@ spec:
               mountPath: {{ .path }}
             {{- end }}
           envFrom:
-          {{- range .secrets }}
-          - secretRef:
-              name: {{ printf "%s-%s" $.Release.Name .name }}
-          {{- end }}
-          {{- range .configMaps }}
-          - configMapRef:
-              name: {{ printf "%s-%s" $.Release.Name .name }}
-          {{- end }}
+            {{- range .secrets }}
+            - secretRef:
+                name: {{ printf "%s-%s" $.Release.Name .name }}
+            {{- end }}
+            {{- range .configMaps }}
+            - configMapRef:
+                name: {{ printf "%s-%s" $.Release.Name .name }}
+            {{- end }}
       volumes:
         {{- range .pvcs }}
         - name: {{ .name }}-volume
