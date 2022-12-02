@@ -1,12 +1,12 @@
-{{- range $name, $val := .Values.deployments }}
+{{- range $deploymentName, $val := .Values.deployments }}
 {{- if .enabled }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
+  name: {{ printf "%s-%s" $.Release.Name $deploymentName }}
   labels:
-    {{- include "chart.labels" $ | nindent 4 }}
+    {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 4 }}
 spec:
   ports:
 {{- range .ports }}
@@ -16,7 +16,6 @@ spec:
       protocol: {{ .protocol }}
 {{- end }}
   selector:
-    {{- include "chart.selectorLabels" $ | nindent 4 }}
-    app.kubernetes.io/app: {{ $name }}
+    {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 6 }}
 {{ end -}}
 {{ end -}}

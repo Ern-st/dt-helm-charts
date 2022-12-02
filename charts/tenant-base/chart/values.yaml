@@ -1,7 +1,4 @@
 ---
-# Allows for renaming of the chart, this is advised since the pods would include 'tenant-base' as the name otherwise.
-fullnameOverride: foobar
-
 # A list of deployments, this allows for multiple deployments in the same chart.
 deployments:
   # Name of the deployments - this is appended on the deployment and service name.
@@ -16,24 +13,6 @@ deployments:
 
     # The amount of replicas wanted of this container
     replicaCount: 3
-
-    # The volumes list defines what types of volumes to provide to the pod.
-    # In general we only recommend using the following:
-    # * configMaps https://kubernetes.io/docs/concepts/storage/volumes/#configmap
-    # * secrets https://kubernetes.io/docs/concepts/storage/volumes/#secret
-    # * emptyDir https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
-    # * persistentVolumeClaim (PVC) https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim
-    volumes: []
-    #  - name: cache-volume
-    #    emptyDir: {}
-    #  - name: configMap
-    #    configMaps:
-    #      name: foobar
-
-    # The volumes defined above must be mounted in the pod on a specified path.
-    volumeMounts: []
-    #  - mountPath: /cache
-    #    name: cache-volume
 
     # The ports on the pod and the equal port on the service and their protocol.
     ports:
@@ -51,12 +30,25 @@ deployments:
     secrets:
       []
       # - name: token
-      #   key: secret/tenant-foobar/token
 
     # A list of config maps that should be mounted into the main pod as environment variables
     configMaps:
       []
     # - name: foobar
+
+    # A list of PVCs that should be mounted as a folder in the main pod
+    # name - Name of the PVC defined in the persistentVolumesClaims list on line ~71
+    # path - The path where the folder should be mounted. NOTE! the WILL remove the content of the folder on the host, if it exists already, so aim to choose a path that is know empty.
+    pvcs:
+      []
+      # - name: foobar
+      #   path: /tmp/foo
+
+# A list of secrets to fetch from the vault and mounted on the main pod.
+secrets:
+  []
+  # - name: token
+  #   key: secret/tenant-foobar/token
 
 # The configMap allows for storage of non secret configurations.
 configMaps:
@@ -67,8 +59,9 @@ configMaps:
 
 # Persistent Volume claims allows for the creation of a volume that will persist even if the pod it's mounted on is destroyed.
 persistentVolumeClaims:
-# - name: foobar
-#   size: 8Gi
+  []
+  # - name: foobar
+  #   size: 8Gi
 
 kafkaTopics:
   # List of Kafka topics to create. You still need to configure the access to the topic in the 'access' block to give applications access to produce or consume to a topic.

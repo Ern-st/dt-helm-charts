@@ -1,19 +1,17 @@
-{{- range $name, $val := .Values.deployments }}
+{{- range $deploymentName, $val := .Values.deployments }}
 {{- if .enabled }}
-
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" (include "chart.fullname" $) $name }}
+  name: {{ printf "%s-%s" $.Release.Name $deploymentName }}
   labels:
-    {{- include "chart.labels" $ | nindent 4 }}
+    {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 4 }}
 spec:
   replicas: {{ .replicaCount }}
   selector:
     matchLabels:
-      {{- include "chart.selectorLabels" $ | nindent 6 }}
-      app.kubernetes.io/app: {{ $name }}
+      {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 6 }}
   template:
     metadata:
       {{- with .podAnnotations }}
@@ -21,14 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "chart.selectorLabels" $ | nindent 8 }}
-        app.kubernetes.io/app: {{ $name }}
+        {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 8 }}
     spec:
-      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $name) | nindent 6 }}
+      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $deploymentName) | nindent 6 }}
       imagePullSecrets:
         - name: registry-token
       containers:
-        - name: {{ $name }}
+        - name: {{ $deploymentName }}
           securityContext:
             {{- toYaml .securityContext | nindent 12 }}
           image: {{ printf "%s:%s" .image.repository .image.tag }}
@@ -50,17 +47,24 @@ spec:
           resources:
             {{- toYaml .resources | nindent 12 }}
           volumeMounts:
-            {{- toYaml .volumeMounts | nindent 12 }}
+            {{- range .pvcs }}
+            - name: {{ .name }}-volume
+              mountPath: {{ .path }}
+            {{- end }}
           envFrom:
-          {{- range .secrets }}
-          - secretRef:
-              name: {{ printf "%s-%s" $.Release.Name .name }}
-          {{- end }}
-          {{- range .configMaps }}
-          - configMapRef:
-              name: {{ printf "%s-%s" $.Release.Name .name }}
-          {{- end }}
+            {{- range .secrets }}
+            - secretRef:
+                name: {{ printf "%s-%s" $.Release.Name .name }}
+            {{- end }}
+            {{- range .configMaps }}
+            - configMapRef:
+                name: {{ printf "%s-%s" $.Release.Name .name }}
+            {{- end }}
       volumes:
-        {{- toYaml .volumes | nindent 8 }}
+        {{- range .pvcs }}
+        - name: {{ .name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" $.Release.Name .name }}
+        {{- end }}
 {{ end -}}
 {{- end }}
