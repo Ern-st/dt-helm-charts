@@ -1,0 +1,24 @@
+{{- range $deploymentName, $val := .Values.deployments }}
+{{- if .enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ printf "%s-%s" $.Release.Name $deploymentName }}
+  labels:
+    {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 4 }}
+spec:
+  endpoints:
+    {{- range .ports }}
+  - interval: 30s
+    port: {{ .servicePortName }}
+    scrapeTimeout: 25s
+  {{- end }}
+  namespaceSelector:
+    matchNames:
+    - {{ $.Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 6 }}
+{{ end -}}
+{{- end }}
