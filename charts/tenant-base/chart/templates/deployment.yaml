@@ -23,9 +23,6 @@ spec:
               {{- end -}}
             {{- end -}}
           {{- end }}
-      {{- with .podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
         {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 8 }}
     spec:
