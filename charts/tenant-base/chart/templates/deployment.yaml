@@ -14,10 +14,15 @@ spec:
       {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 6 }}
   template:
     metadata:
-      {{- with .podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- /* To ensure pods are recreated when a configmap changes that the pod mounts, we annotate the pods with the checksums of the configmaps. */}}
+          {{- range $_, $allConfigMap := $.Values.configMaps -}}
+            {{- range $_, $deploymentConfigMap := $val.configMaps -}}
+              {{- if eq $allConfigMap.name $deploymentConfigMap.name }}
+                {{- printf "%s/%s: %s" "checksum/configmap" $allConfigMap.name ($allConfigMap | toYaml | toString | sha256sum) | nindent 8 }}
+              {{- end -}}
+            {{- end -}}
+          {{- end }}
       labels:
         {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 8 }}
     spec:
