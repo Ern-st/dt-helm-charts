@@ -115,18 +115,18 @@ deployments:
 
     networkPolicy:
       ingress:
-        - labels:
-            app.kubernetes.io/name: foo
+        - releaseName: dlr
+          deploymentName: data
           ports:
             - http
       egress:
-        - labels:
-            app.kubernetes.io/name: foo
+        - releaseName: dlr
+          deploymentName: data
           ports:
             - protocol: TCP
               port: 8080
 ```
 
-This would allow traffic to flow from pods with the label `app.kubernetes.io/name: foo` to the pods created by the deployment on the port defined with `podPortName: http` in `ports`.
+This allows incoming traffic(ingress) to the pod from pods in the dlr helm release that is under the 'data' deployment. This is done on port http, which is defined under `ports`.
 
-It would also allow traffic to flow from the pods creatd by this deployment to pods with the label `app.kubernetes.io/name: foo` on port `8080/TCP`.
+This also allows outgoing traffic(egress) from the pod to pods in the same 'data' deployment under the dlr helm release on port `8080/TCP`.
