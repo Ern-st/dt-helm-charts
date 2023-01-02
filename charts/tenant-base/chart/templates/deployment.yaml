@@ -1,17 +1,18 @@
 {{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
 {{- if .enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name $deploymentName }}
+  name: {{ $fullName }}
   labels:
-    {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 4 }}
+    {{- include "chart.labels" (dict "name" $fullName "values" $val "root" $) | nindent 4 }}
 spec:
   replicas: {{ .replicaCount }}
   selector:
     matchLabels:
-      {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 6 }}
+      {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -24,13 +25,13 @@ spec:
             {{- end -}}
           {{- end }}
       labels:
-        {{- include "chart.selectorLabels" (dict "name" $deploymentName) | nindent 8 }}
+        {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 8 }}
     spec:
-      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $deploymentName) | nindent 6 }}
+      {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $fullName) | nindent 6 }}
       imagePullSecrets:
         - name: registry-token
       containers:
-        - name: {{ $deploymentName }}
+        - name: {{ $fullName }}
           securityContext:
             {{- toYaml .securityContext | nindent 12 }}
           image: {{ printf "%s:%s" .image.repository .image.tag }}
