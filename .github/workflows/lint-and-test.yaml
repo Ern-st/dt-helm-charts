@@ -42,11 +42,7 @@ jobs:
         run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./yamllint/config.yaml
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.0
-        with:
-          minikube version: "v1.27.1"
-          kubernetes version: "v1.25.0"
-          github token: ${{ secrets.GITHUB_TOKEN }}
+        run: minikube start --kubernetes-version v1.25.0
 
       - name: Run chart-testing (install)
         run: ct install --config ./.github/configs/ct-install.yaml --upgrade --helm-extra-args "--timeout 7200s"
