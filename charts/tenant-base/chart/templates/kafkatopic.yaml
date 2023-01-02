@@ -1,14 +1,15 @@
 {{- range .Values.kafkaTopics.create }}
+{{- $fullName := (printf "%s-%s" $.Release.Name .name) }}
 # https://strimzi.io/docs/operators/latest/configuring.html#type-KafkaTopic-reference
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: {{ printf "%s-%s" $.Release.Namespace .name }}
+  name: {{ $fullName}}
   labels:
-    {{- include "chart.selectorLabels" (dict "name" .name) | nindent 4 }}
+    {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 4 }}
     strimzi.io/cluster: my-cluster
 spec:
-  topicName: {{ printf "%s-%s" $.Release.Namespace .name }}
+  topicName: {{ $fullName}}
   partitions: {{ .partitions }}
   replicas: {{  .replicas }}
   config:

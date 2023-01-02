@@ -1,12 +1,13 @@
 {{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
 {{- if .enabled }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name $deploymentName }}
+  name: {{ $fullName }}
   labels:
-    {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 4 }}
+    {{- include "chart.labels" (dict "name" $fullName "values" $val "root" $) | nindent 4 }}
 spec:
   endpoints:
     {{- range .ports }}
@@ -19,6 +20,6 @@ spec:
     - {{ $.Release.Namespace }}
   selector:
     matchLabels:
-      {{- include "chart.labels" (dict "name" $deploymentName "values" $val "root" $) | nindent 6 }}
+      {{- include "chart.labels" (dict "name" $fullName "values" $val "root" $) | nindent 6 }}
 {{ end -}}
 {{- end }}
