@@ -22,6 +22,8 @@ deployments:
         servicePort: 80
         protocol: TCP
 
+    # To allow traffic between different pods in your namespace, you have to create ingress and egress rules.
+    # See [this link](https://github.com/distributed-technologies/helm-charts/blob/main/charts/tenant-base/docs/deployment.md#networkpolicy) for more.
     networkPolicy:
       ingress: []
       egress: []
