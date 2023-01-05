@@ -63,56 +63,6 @@ prometheus-kafka-exporter:
 #     namespace: kafka
 #     additionalLabels:
 #       release: prometheus
-# Values for the confluent helm chart dependency:
-# https://github.com/confluentinc/cp-helm-charts/blob/master/values.yaml
-cp-helm-charts:
-  enabled: true
-  cp-zookeeper:
-    enabled: false
-  cp-kafka:
-    enabled: false
-  cp-kafka-rest:
-    enabled: false
-  # Values for the connect cluster inside the dependency:
-  # https://github.com/confluentinc/cp-helm-charts/blob/master/charts/cp-kafka-connect/values.yaml
-  cp-kafka-connect:
-    enabled: false
-
-  # Docs: https://github.com/confluentinc/cp-helm-charts/blob/master/charts/cp-ksql-server/values.yaml
-  cp-ksql-server:
-    enabled: true
-    image: confluentinc/cp-ksqldb-server
-    imageTag: 6.2.1
-    cp-schema-registry:
-      url: http://kafka-cp-schema-registry:8081
-    kafka:
-      bootstrapServers: my-cluster-kafka-bootstrap:9092
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchLabels:
-                  app: cp-ksql-server
-              topologyKey: "kubernetes.io/hostname"
-  cp-schema-registry:
-    enabled: true
-    image: confluentinc/cp-schema-registry
-    imageTag: 6.2.1
-    kafka:
-      bootstrapServers: my-cluster-kafka-bootstrap:9092
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchLabels:
-                  app: cp-schema-registry
-              topologyKey: "kubernetes.io/hostname"
-  cp-control-center:
-    enabled: false
 
 # The following topics will be created by the operator
 topics:
