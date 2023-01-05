@@ -15,17 +15,3 @@ Then we install and test our chart with ` helm install default chart/ && helm te
 # Monitoring 
 
 Kafka Strimzi does not export metrics by default and needs to have a exporter installed from this chart https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-kafka-exporter/
-
-# KafkaDB - ksql
-
-The helm chart enables and exposes a KafkaDB server which makes it possible to create Kafka Streams and Tables that can be queried with ksql
-
-Some examples are found in [docs/ksql-examples.md](docs)
-
-# WARNING
-
-Different versions of ksqlDB and ksqlBD-cli are highly incompatible. Make sure you always use exactly the same version of the server and the cli.
-
-To execute the queries to the ksql server run a ksql-CLI pod:
-
-`kubectl run my-shell --rm -i --tty --image confluentinc/cp-ksqldb-cli:6.1.0 -- http://test-kafka-cp-ksql-server:8088`
