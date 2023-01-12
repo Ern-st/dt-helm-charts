@@ -1,5 +1,5 @@
 {{- range .Values.kafkaTopics.create }}
-{{- $fullName := (printf "%s-%s" $.Release.Name .name) }}
+{{- $fullName := (printf "%s-%s" $.Release.Namespace .name) }}
 # https://strimzi.io/docs/operators/latest/configuring.html#type-KafkaTopic-reference
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
