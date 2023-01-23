@@ -42,14 +42,24 @@ spec:
               containerPort: {{ .podPort }}
               protocol: {{ .protocol }}
           {{- end }}
+          {{- /* If the "livenessProbe" key does not exist on the deployment in the values file or the value is something that evaluates to false, we use default values */}}
           livenessProbe:
+            {{- if or (not .livenessProbe) (not (hasKey $val "livenessProbe")) }}
             httpGet:
               path: /healthz
               port: 9898
+            {{- else }}
+              {{- toYaml .livenessProbe | nindent 12 }}
+            {{- end }}
+          {{- /* If the "readinessProbe" key does not exist on the deployment in the values file or the value is something that evaluates to false, we use default values */}}
           readinessProbe:
+            {{- if or (not .readinessProbe) (not (hasKey $val "readinessProbe")) }}
             httpGet:
               path: /healthz
               port: 9898
+            {{- else }}
+              {{- toYaml .readinessProbe | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
           volumeMounts:

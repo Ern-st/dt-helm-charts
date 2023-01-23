@@ -46,6 +46,14 @@ deployments:
       # - name: foobar
       #   path: /tmp/foo
 
+    # Probes are meant for Kubernets to realise when an application is unhealthy and should be restarted.
+    # This is most likely a http or gRPC endpoint that Kubernetes call to check if the application is responsive.
+    # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+    # ReadynessProbe is used to tell when the application is ready to accept trafic. Until the readinessProbe is successful a Service will not direct trafic to the Pod.
+    readinessProbe: {}
+    # LivenessProve is used to tell if the application is healthy.
+    livenessProbe: {}
+
 # A list of secrets to fetch from the vault and mounted on the main pod.
 secrets:
   []
