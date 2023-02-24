@@ -1,6 +1,7 @@
 {{- range $deploymentName, $val := .Values.deployments }}
 {{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
-{{- if .enabled }}
+{{/** If the deployment is enabled, ports are defined and ports is not an empty list **/}}
+{{- if and .enabled (and .ports (not (eq (len .ports) 0))) }}
 ---
 apiVersion: v1
 kind: Service
