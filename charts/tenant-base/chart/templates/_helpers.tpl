@@ -1,6 +1,6 @@
 {{/*
 Common labels
-Takes a dictionary contaning containing:
+Takes a dictionary containing:
  - 'name'=<The name to use in the labels>,
  - 'values'=<The map of the relative values from a loop>,
  - 'root'=<The root values - used to access ".Release.Name"> - optional - if not present the value will be retrived from .values
@@ -15,7 +15,7 @@ app.kubernetes.io/part-of: {{ .root.Release.Name }}
 
 {{/*
 SelectorLabels
-Takes a dictionary contaning containing: 'name'=string
+Takes a dictionary containing: 'name'=string
 */}}
 {{- define "chart.selectorLabels" -}}
 app.kubernetes.io/name: {{ .name }}
