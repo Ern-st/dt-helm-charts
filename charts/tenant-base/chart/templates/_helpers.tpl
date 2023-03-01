@@ -8,9 +8,9 @@ Takes a dictionary containing:
 {{- define "chart.labels" -}}
 {{ include "chart.selectorLabels" (dict "name" .name)}}
 {{- if .values }}
-app.kubernetes.io/version: {{ .values.image.tag }}
+app.kubernetes.io/version: {{ printf "%q" .values.image.tag }}
 {{- end }}
-app.kubernetes.io/part-of: {{ .root.Release.Name }}
+app.kubernetes.io/part-of: {{ printf "%q" .root.Release.Name }}
 {{- end }}
 
 {{/*
@@ -18,8 +18,8 @@ SelectorLabels
 Takes a dictionary containing: 'name'=string
 */}}
 {{- define "chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ .name }}
-app.kubernetes.io/instance: {{ .name }}
+app.kubernetes.io/name: {{ printf "%q" .name }}
+app.kubernetes.io/instance: {{ printf "%q" .name }}
 {{- end }}
 
 {{/*
