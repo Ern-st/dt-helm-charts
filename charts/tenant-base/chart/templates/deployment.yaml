@@ -63,7 +63,7 @@ spec:
           resources:
             {{- toYaml .resources | nindent 12 }}
           volumeMounts:
-            {{- range .pvcs }}
+            {{- range .persistentVolumeClaims }}
             - name: {{ .name }}-volume
               mountPath: {{ .path }}
             {{- end }}
@@ -77,7 +77,7 @@ spec:
                 name: {{ printf "%s-%s" $.Release.Name .name }}
             {{- end }}
       volumes:
-        {{- range .pvcs }}
+        {{- range .persistentVolumeClaims }}
         - name: {{ .name }}-volume
           persistentVolumeClaim:
             claimName: {{ printf "%s-%s" $.Release.Name .name }}

@@ -17,7 +17,7 @@ deployments:
     # The ports on the pod and the equal port on the service and their protocol.
     ports:
       - podPortName: http
-        podPort: 9898
+        podPort: 5000
         servicePortName: http
         servicePort: 80
         protocol: TCP
@@ -41,20 +41,27 @@ deployments:
     # A list of PVCs that should be mounted as a folder in the main pod
     # name - Name of the PVC defined in the persistentVolumesClaims list on line ~71
     # path - The path where the folder should be mounted. NOTE! the WILL remove the content of the folder on the host, if it exists already, so aim to choose a path that is know empty.
-    pvcs:
+    persistentVolumeClaims:
       []
       # - name: foobar
       #   path: /tmp/foo
 
     # Probes are meant for Kubernets to realise when an application is unhealthy and should be restarted.
-    # This is most likely a http or gRPC endpoint that Kubernetes call to check if the application is responsive.
-    # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
     # ReadynessProbe is used to tell when the application is ready to accept trafic. Until the readinessProbe is successful a Service will not direct trafic to the Pod.
+    # The default values of the probes can be seen commented out under the probes.
+    # NB: Exposing health checks is required for your application to run on the platform
     readinessProbe: {}
+    #  httpGet:
+    #    path: /healthz
+    #    port: 9898
+
     # LivenessProve is used to tell if the application is healthy.
     livenessProbe: {}
+    #  httpGet:
+    #    path: /healthz
+    #    port: 9898
 
-# A list of secrets to fetch from the vault and mounted on the main pod.
+# A list of secrets to fetch from the vault and create on the cluster
 secrets:
   []
   # - name: token
