@@ -5,6 +5,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ printf "%s-%s" $.Release.Name .name }}
 spec:
+  storageClassName: ceph-filesystem
   accessModes:
     - ReadWriteMany
   volumeMode: Filesystem
