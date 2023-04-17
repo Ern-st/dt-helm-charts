@@ -1,5 +1,5 @@
 apiVersion: v2
 name: artifact-registry
 description: A Helm chart for artifact storage
-version: 0.1.4
+version: 0.2.0
 appVersion: "1.16.0"

@@ -1,8 +1,3 @@
-env: prod
-localStorageClass:
-  enabled: true
-  nodeName: chart-testing-worker
-  path: "/home"
 helmServer:
   replicaCount: 1
   image:
@@ -20,10 +15,6 @@ helmServer:
       cpu: 100m
       memory: 128Mi
   affinity: {}
-  dataVolume:
-    size: 1G
-    storageClass: standard
-    accessMode: ReadWriteOnce
 
 imageRegistry:
   replicaCount: 1
@@ -44,7 +35,15 @@ imageRegistry:
   affinity: {}
   tls:
     enabled: false
-  dataVolume:
+
+pvcs:
+  - name: helm-registry-data-pvc
     size: 1G
     storageClass: standard
     accessMode: ReadWriteOnce
+#   volumeName:
+  - name: image-registry-data-pvc
+    size: 1G
+    storageClass: standard
+    accessMode: ReadWriteOnce
+#   volumeName:

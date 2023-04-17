@@ -18,9 +18,12 @@ spec:
         # FIXME: We should a custom values file with the "git-test-project" repo specified
         # Waiting on upstream: https://github.com/helm/chart-testing-action/issues/47
         - set -o errexit;
-          mkdir /var/lib/git/git-test-project.git;
-          git -C /var/lib/git/git-test-project.git init --bare;
-          chown -R 1000:1000 /var/lib/git/git-test-project.git;
+          git_folder="/var/lib/git/git-test-project.git";
+          if [ ! -d "$git_folder" ]; then
+            mkdir "$git_folder";
+            git -C "$git_folder" init --bare;
+            chown -R 1000:1000 "$git_folder";
+          fi;
           mkdir git-test-project;
           cd git-test-project;
           git config --global init.defaultBranch main;
