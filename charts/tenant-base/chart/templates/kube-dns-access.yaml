@@ -1,0 +1,32 @@
+{{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
+{{- if .enabled }}
+{{- if .networkPolicy }}
+{{- if .networkPolicy.egress }}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  labels:
+    {{- include "chart.labels" (dict "name" $fullName "values" $val "root" $) | nindent 4 }}
+  name: {{ $fullName }}-dns-access 
+spec:
+  egress:
+  - toPorts:
+    - ports:
+      - port: "53"
+        protocol: TCP
+      - port: "53"
+        protocol: UDP
+    toServices:
+    - k8sService:
+        namespace: kube-system
+        serviceName: kube-dns
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ $.Release.Name }}-{{ $deploymentName }}
+      app.kubernetes.io/name: {{ $.Release.Name }}-{{ $deploymentName }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

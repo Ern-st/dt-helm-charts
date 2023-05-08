@@ -90,6 +90,36 @@ deployments:
             - protocol: TCP
               port: 8080
 ```
+### Example
+NetworkPolicies can be used for pod to pod traffic. To send traffic from one pod to another, you need to configure ingress on the receiving pod and egress on the transmitting pod. This can look like this:
+```yaml
+deployments:
+  sender:
+    networkPolicy:
+      ingress: []
+      egress:
+        - releaseName: test
+          deploymentName: receiver
+          ports:
+            - protocol: TCP
+              port: 9898
+  receiver:
+    ports:
+      - podPortName: http
+        podPort: 9898
+        servicePortName: http
+        servicePort: 80
+        protocol: TCP
+    networkPolicy:
+      ingress:
+        - releaseName: test
+          deploymentName: sender
+          ports:
+            - http
+      egress: []
+```
+This example creates a deployment called `sender`. It creates a pod with an egress network policy that allows traffic on port 9898 with the protocol TCP to another pod in the same helm release. This deployment is called `receiver`. This `receiver` deployment will create a network policy for its pod to receive ingress traffic on the `http` port. We can see this defined as port 9898 with TCP as the protocol.
+When you allow egress traffic from a pod, you will automatically create a policy that allows for the egress pod to contact the kubernetes DNS server. This allows you to use a pod's service instead of contacting the pod directly. To find the DNS name for the service of the pod you are trying to contact, use: `<release-name>-<deployment-name>.<namespace>.svc.cluster.local:<servicePort>`. In this example, this would look like this: `test-receiver.tenant-testing.svc.cluster.local:80`. This is the endpoint you can use inside your pod `sender` to send traffic to your pod `receiver`.
 
 ## Secrets
 Secrets is a list that contains the secrets you would like to be mounted into the pod in the deployment. Before you can mount a secret one has to be created on the cluster. See [secrets](secret.md). In this example we mount a secret called `token` into our pod.
