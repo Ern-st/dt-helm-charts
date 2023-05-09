@@ -20,16 +20,13 @@ The structure of this section has been made according to the [values.yaml file](
 1. [Deployment](../docs/deployment.md)
 A deployment is used to describe how we want to deploy one or more containers in a pod.
 
-2. [Secret](../docs/secret.md)
-Secrets are a way to store sensitive information in Kubernetes. This could be tokens, passwords or certificates.
-
-3. [Configmap](../docs/configmap.md)
+2. [Configmap](../docs/configmap.md)
 Configmaps are a way to store non-sensitive information in kubernetes. This could be dashboards, configurations or environment variables.
 
-4. [Persistent Volume Claims](../docs/pvc.md)
+3. [Persistent Volume Claims](../docs/pvc.md)
 Persistent volume claims are a way to create persistent storage on the cluster, that will not be deleted if a pod dies. They can be used to store files that need to be kept through any pod restarts.
 
-5. [KafkaTopics](../docs/kafkatopic.md)
+4. [KafkaTopics](../docs/kafkatopic.md)
 Kafka topics are a way to describe which topics you want to create and which topics you want access to on the cluster.
 
 ## Configuration
@@ -60,8 +57,6 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.networkPolicy.egress.ports` | A list of port names to allow egress traffic to | `nil`                                          |
 | `deployments.podinfo.networkPolicy.egress.ports.protocol` | The protocol for the egress traffic | `nil`                                             |
 | `deployments.podinfo.networkPolicy.egress.ports.port` | The port to allow egress traffic to | `nil`                                                 |
-| `deployments.podinfo.secrets`             | A list of secrets to fetch from the vault and mount into the pod | `[]`                                 |
-| `deployments.podinfo.secrets.name`        | The name of the secret to fetch               | `nil`                                                   |
 | `deployments.podinfo.configMaps`          | A list of configmaps that should be mounted into the pod as environment variables | `[]`                |
 | `deployments.podinfo.configMaps.name`     | The name of the configmap to fetch            | `nil`                                                   |
 | `deployments.podinfo.persistentVolumeClaims` | A list of persistentVolumeClaims that should be mounted as folder on the main pod | `[]`             |
@@ -75,9 +70,6 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.livenessProbe.httpGet` | A dictionary of the endpoint to perform liveness probe probe on | `nil`                               |
 | `deployments.podinfo.livenessProbe.httpGet.path` | The path to probe for liveness         | `/healthz`                                              |
 | `deployments.podinfo.livenessProbe.httpGet.port` | The port to probe for liveness         | `9898`                                                  |
-| `secrets`                                 | A list of secrets to fetch from the vault and create in your namespace | `[]`                           |
-| `secrets.name`                            | The name of the secret you want to create     | `nil`                                                   |
-| `secrets.key`                             | The path to the key in the vault              | `nil`                                                   |
 | `configMaps`                              | A list of configmaps to be created            | `[]`                                                    |
 | `configMaps.name`                         | The name of the configmap you want to create  | `nil`                                                   |
 | `configMaps.content`                      | A dictionary of key-value pairs               | `nil`                                                   |

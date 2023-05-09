@@ -28,11 +28,6 @@ deployments:
       ingress: []
       egress: []
 
-    # A list of secrets to fetch from the vault and mounted on the main pod.
-    secrets:
-      []
-      # - name: token
-
     # A list of config maps that should be mounted into the main pod as environment variables
     configMaps:
       []
@@ -60,12 +55,6 @@ deployments:
     #  httpGet:
     #    path: /healthz
     #    port: 9898
-
-# A list of secrets to fetch from the vault and create on the cluster
-secrets:
-  []
-  # - name: token
-  #   key: secret/tenant-foobar/token
 
 # The configMap allows for storage of non secret configurations.
 configMaps:
