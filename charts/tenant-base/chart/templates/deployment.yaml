@@ -61,7 +61,12 @@ spec:
               {{- toYaml .readinessProbe | nindent 12 }}
             {{- end }}
           resources:
-            {{- toYaml .resources | nindent 12 }}
+            requests:
+              memory: {{ .resources.memory }}
+              cpu: {{ .resources.cpu }}
+            limits:
+              memory: {{ .resources.memory }}
+              cpu: {{ .resources.cpu }}
           volumeMounts:
             {{- range .persistentVolumeClaims }}
             - name: {{ .name }}-volume

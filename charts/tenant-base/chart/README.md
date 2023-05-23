@@ -70,6 +70,9 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.livenessProbe.httpGet` | A dictionary of the endpoint to perform liveness probe probe on | `nil`                               |
 | `deployments.podinfo.livenessProbe.httpGet.path` | The path to probe for liveness         | `/healthz`                                              |
 | `deployments.podinfo.livenessProbe.httpGet.port` | The port to probe for liveness         | `9898`                                                  |
+| `deployments.podinfo.resources`           | Setting resources for you pod                 | `nil`                                                   |
+| `deployments.podinfo.resources.memory`    | The amount of RAM reserved for your pod       | `100Mi`                                                 |
+| `deployments.podinfo.resources.cpu`       | The amount of cores reserved for your pod     | `100m`                                                  |
 | `configMaps`                              | A list of configmaps to be created            | `[]`                                                    |
 | `configMaps.name`                         | The name of the configmap you want to create  | `nil`                                                   |
 | `configMaps.content`                      | A dictionary of key-value pairs               | `nil`                                                   |

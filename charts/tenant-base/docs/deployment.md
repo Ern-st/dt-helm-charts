@@ -160,3 +160,17 @@ deployments:
 
 If you would like to configure your own, simply configure the example above in your [values.yaml](../chart/values.yaml).
 NB: Exposing health checks is required for your application to run on the platform
+
+## Resource control
+Setting the resources for your pod can be a good way to make sure enough memory and cpu is dedicated to making your application run in a stable way on the cluster. You can set the resources for your pod like this:
+```yaml
+deployments:
+  foo:
+    resources:
+      memory: 200Mi
+      cpu: 200m
+    ...
+```
+In this example, we reserve 200 megabyte of RAM for your pod and 200 mili CPU's, equivalent to 1/5 core.
+It is important to manage resources in your own namespace. Currently, the total RAM reserved for a namespace is 10 gigabyte and the total CPU reserved is 5 cores.
+Note: If you do not configure resources for your pod, you will be assigned the default resources which is 100 megabyte of RAM and 100 mili CPU's, equivalent to 1/10 core.
