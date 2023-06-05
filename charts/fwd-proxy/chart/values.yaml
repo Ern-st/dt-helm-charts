@@ -32,6 +32,12 @@ helmRepositories:
   - "helm.cilium.io"
   - "metallb.github.io"
   - "prometheus-community.github.io"
+  - "helm.releases.hashicorp.com"
+  - "charts.jetstack.io"
+  - "kyverno.github.io"
+  - "stakater.github.io"
+  - "strimzi.io"
+  - "traefik.github.io"
 
 service:
   type: NodePort
