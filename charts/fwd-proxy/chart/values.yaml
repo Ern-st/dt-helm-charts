@@ -1,3 +1,6 @@
+certificate: ""
+key: ""
+
 nameOverride: ""
 fullnameOverride: ""
 

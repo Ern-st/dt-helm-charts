@@ -1,3 +1,5 @@
+{{- if .Values.certificate -}}
+{{- if .Values.key -}}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -6,4 +8,7 @@ metadata:
     {{- include "fwd-proxy.labels" . | nindent 4 }}
 type: Opaque
 data:
-{{ (.Files.Glob "certificates/*").AsSecrets | indent 2 }}
+  root_ca.crt: {{ .Values.certificate }}
+  root_ca.key: {{ .Values.key }}
+{{- end -}}
+{{- end -}}
