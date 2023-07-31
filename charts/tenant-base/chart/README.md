@@ -1,6 +1,11 @@
 # Tenant-base
 The tenant base helm chart is a chart that give an easy all in one place to make deployments. It is only designed to make deployments and the resources that could be useful for deployments, like configmaps, pvc's etc.
 
+## Release Notes
+This section will describe the changes done in each helm chart release
+### 0.11.0
+- Added [ingress functionality](../docs/deployment.md#ingress) so tenants can now create ingress resources
+
 ## How to install locally
 If you have a local kubernetes cluster, created with for example minikube or KinD, you can install the helm chart the following way:
 ```
@@ -73,6 +78,11 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.resources`           | Setting resources for you pod                 | `nil`                                                   |
 | `deployments.podinfo.resources.memory`    | The amount of RAM reserved for your pod       | `100Mi`                                                 |
 | `deployments.podinfo.resources.cpu`       | The amount of cores reserved for your pod     | `100m`                                                  |
+| `deployments.podinfo.ingress`             | Setting ingress for your pod                  | `nil`                                                   |
+| `deployments.podinfo.ingress.host`        | Setting ingress host name for your pod        | `nil`                                                   |
+| `deployments.podinfo.ingress.serviceName` | Setting service name target for ingress       | `nil`                                                   |
+| `deployments.podinfo.ingress.port`        | Setting service name target port for ingress  | `nil`                                                   |
+| `deployments.podinfo.ingress.secretName`  | Setting cert and key secret name              | `nil`                                                   |
 | `configMaps`                              | A list of configmaps to be created            | `[]`                                                    |
 | `configMaps.name`                         | The name of the configmap you want to create  | `nil`                                                   |
 | `configMaps.content`                      | A dictionary of key-value pairs               | `nil`                                                   |

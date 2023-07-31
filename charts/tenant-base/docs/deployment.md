@@ -171,6 +171,43 @@ deployments:
       cpu: 200m
     ...
 ```
-In this example, we reserve 200 megabyte of RAM for your pod and 200 mili CPU's, equivalent to 1/5 core.
+In this example, we reserve 200 megabyte of RAM for your pod and 200 milli CPU's, equivalent to 1/5 core.
 It is important to manage resources in your own namespace. Currently, the total RAM reserved for a namespace is 10 gigabyte and the total CPU reserved is 5 cores.
 Note: If you do not configure resources for your pod, you will be assigned the default resources which is 100 megabyte of RAM and 100 mili CPU's, equivalent to 1/10 core.
+
+## Ingress
+Setting up ingress for your pod is an idea if you would like to send traffic to the pod for example by accessing a dashboard that the pod is exposing
+```yaml
+    ingress:
+      host: "podinfo.teamdt.net"
+      serviceName: "test-podinfo"
+      port: 80
+      secretName: "podinfo-tls"
+```
+In order for this to work, you need to create a secret manually called `<application-name>-tls` and apply it in your namespace. This can be done with the following manifest, which you should save as `<application-name>-tls-secret.yaml`:
+```yaml
+---
+apiVersion: v1
+type: kubernetes.io/tls
+kind: Secret
+metadata:
+  name: test-tls
+  namespace: traefik
+data:
+  tls.crt: ""
+  tls.key: ""
+```
+You should fill in the `tls.crt` and `tls.key` with a valid `x.509` certificate and key. You can generate this with the following command. Remember to substitute the CN with your own host name:
+```yaml
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=foo.bar.com"
+```
+After generating the `tls.crt` and `tls.key` you need to base64 encode them before pasting them into the secret:
+```yaml
+base64 -w 0 tls.key
+base64 -w 0 tls.crt
+```
+Paste these two base64 encoding into the `data.tls.crt` and `data.tls.key` fields. now apply the secret on the cluster with:
+```yaml
+kubectl create -f <application-name>-tls-secret.yaml
+```
+If you have filled in all the information correctly and applied it on the cluster, you should be able to access your pod on `https://podinfo.teamdt.net`.

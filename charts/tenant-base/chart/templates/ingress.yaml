@@ -1,0 +1,32 @@
+{{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
+{{- if .enabled }}
+{{- if .ingress }}
+{{- if .ingress.host }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: {{ required "A valid ingress host is required" .ingress.host }}
+      http:
+        paths:
+        - backend:
+            service:
+              name: {{ required "A valid ingress serviceName is required" .ingress.serviceName }}
+              port:
+                number: {{ required "A valid ingress port is required" .ingress.port }}
+          path: /
+          pathType: Prefix
+  tls:
+  - hosts:
+    - {{ required "A valid ingress host is required" .ingress.host }}
+    secretName: {{ required "A valid ingress secretName is required" .ingress.secretName }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

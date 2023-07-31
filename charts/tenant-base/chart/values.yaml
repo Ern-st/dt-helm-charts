@@ -15,12 +15,13 @@ deployments:
     replicaCount: 3
 
     # The ports on the pod and the equal port on the service and their protocol.
-    ports:
-      - podPortName: http
-        podPort: 5000
-        servicePortName: http
-        servicePort: 80
-        protocol: TCP
+    # An example of a port opening and service creation is shown as a comment.
+    ports: {}
+    #  - podPortName: http
+    #    podPort: 9898
+    #    servicePortName: http
+    #    servicePort: 80
+    #    protocol: TCP
 
     # To allow traffic between different pods in your namespace, you have to create ingress and egress rules.
     # See [this link](https://github.com/distributed-technologies/helm-charts/blob/main/charts/tenant-base/docs/deployment.md#networkpolicy) for more.
@@ -60,6 +61,28 @@ deployments:
     resources: {}
     #  memory: 100Mi
     #  cpu: 100m
+
+    # In order to create ingress for your pod, you need to create a DNS record in the DNS zone for the cluster. This can be done by the administrators of the DNS zone for the cluster you are deploying to.
+    ingress:
+      # This is the host name for the DNS record, example lfc.teamdt.net
+      host: ""
+      # This is the name of the service you would like traffic routed to from the ingress controller
+      serviceName: ""
+      # This is the port of the service you would like traffic routed to from the ingress controller
+      port: 80
+      # The name of the secret containing your tls.key and tls.crt
+      # This secret should be of the format:
+      # ---
+      # apiVersion: v1
+      # type: kubernetes.io/tls
+      # kind: Secret
+      # metadata:
+      #   name: test-tls
+      #   namespace: traefik
+      # data:
+      #   tls.crt: ""
+      #   tls.key: ""
+      secretName: ""
 
 # The configMap allows for storage of non secret configurations.
 configMaps:
