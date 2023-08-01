@@ -71,8 +71,8 @@ spec:
         - name: config
           configMap:
             name: {{ include "fwd-proxy.fullname" . }}
-        {{- if .Values.certificate -}}
-        {{- if .Values.key -}}
+        {{- if .Values.certificate }}
+        {{- if .Values.key }}
         - name: root-ssl
           secret:
             secretName: {{ include "fwd-proxy.fullname" . }}
@@ -81,8 +81,8 @@ spec:
                 path: root.crt
               - key: root_ca.key
                 path: root.key
-        {{- end -}}
-        {{- end -}}
+        {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
