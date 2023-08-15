@@ -3,6 +3,9 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.12.0
+**BREAKING CHANGE:**
+- Changed the way kafkaTopics are created. This has no syntactic impact on the `values.yaml` file, but tenants have to upgrade to this version when the dev-cluster is updated to the newest configuration.
 ### 0.11.0
 - Added [ingress functionality](../docs/deployment.md#ingress) so tenants can now create ingress resources
 

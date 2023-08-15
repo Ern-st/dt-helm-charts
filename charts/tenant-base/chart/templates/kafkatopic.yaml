@@ -4,12 +4,13 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: {{ $fullName}}
+  name: {{ $fullName }}
   labels:
     {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 4 }}
     strimzi.io/cluster: my-cluster
+  namespace: kafka-topics
 spec:
-  topicName: {{ $fullName}}
+  topicName: {{ $fullName }}
   partitions: {{ .partitions }}
   replicas: {{  .replicas }}
   config:
