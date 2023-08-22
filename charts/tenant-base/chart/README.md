@@ -3,6 +3,8 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.12.1
+- Fixed bug that disallowed traffic through ingress. Ingress routes will not work until you upgrade to this version. No changes to values.yaml.
 ### 0.12.0
 **BREAKING CHANGE:**
 - Changed the way kafkaTopics are created. This has no syntactic impact on the `values.yaml` file, but tenants have to upgrade to this version when the dev-cluster is updated to the newest configuration.
