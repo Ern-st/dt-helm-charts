@@ -48,54 +48,9 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-certificates:
+certificates: {}
   # Warning: Please replace with your own key!
-  root_ca.crt: |
-    -----BEGIN CERTIFICATE-----
-    MIIDADCCAeigAwIBAgIRAN9rI+kIjpRJfsYGjDxfTlswDQYJKoZIhvcNAQELBQAw
-    GDEWMBQGA1UEAxMNUHJveHkgUm9vdCBDQTAeFw0yMjA3MDExMTEwNTZaFw0zMjA2
-    MjgxMTEwNTZaMBgxFjAUBgNVBAMTDVByb3h5IFJvb3QgQ0EwggEiMA0GCSqGSIb3
-    DQEBAQUAA4IBDwAwggEKAoIBAQDLLdX2b6flPL2VkE8yEsWKDv8lZQF8dDw1+vLT
-    NjA36yP1yJriCe/nUipNLjZSeDl+dyuhaD1U0120cfzYUW0IRCVV3KzUsxSaj9Rl
-    fx+zkcFHU1yI2BXzNQjGEy3YsdYikHV5u5qml6KC5qDLvTgo16mUyEzO9Fw1Fasr
-    UWXO0eWOF6eV8n3bh9vltA4SHdw5c4kFSB6r9fjYpH/N3dd+vk5sNoEHMpAP69fX
-    zXFrH7hubguR/HNLG1L4HKaEUxY8BVZOxtZwS+p0Yvr6FU8+4HuSL8U8QhdIjbHm
-    7qc36i/nByUhQAlS3l/Yc3F8zDwBhe60WnPHxm9ozMUNj4XZAgMBAAGjRTBDMA4G
-    A1UdDwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEBMB0GA1UdDgQWBBSe/V/2
-    LUwehEh3zlLN1sH9WPHKDjANBgkqhkiG9w0BAQsFAAOCAQEAbG52Uml1HVubWgLD
-    QOPD4BadtiC6nnOX4GIfonavHmGiQBQoOeLcd4gZPVcyPYcdldC6tUqZQk8ctnUz
-    NWEyubDoI3C5/PMEPSiUnfmrRlF3Z+pDB9OdiGCuG0dkopwqOonwpV5HKeQBap5L
-    5bwI3vcwAbrPrX0jOib+hlubz9+hD4kIvy6TluK+7l5LrDDuKk/4qY2G6JQ1m5te
-    Q6CjuPN5hp9/d6AtcToRg+fouQDSyANmsHX5cq05AxW+6mzg4CPRc2hKc0MaLFYM
-    YTtLhTJ8ven2exwWf6sFNU6SAbKQKX/r3TSY9IIxfXPyqvtpLTLcZeP8HYnp6/l5
-    8bDUlw==
-    -----END CERTIFICATE-----
+  # root_ca.crt: ""
+
   # Warning: Please replace with your own key!
-  root_ca.key: |
-    -----BEGIN RSA PRIVATE KEY-----
-    MIIEpAIBAAKCAQEAyy3V9m+n5Ty9lZBPMhLFig7/JWUBfHQ8Nfry0zYwN+sj9cia
-    4gnv51IqTS42Ung5fncroWg9VNNdtHH82FFtCEQlVdys1LMUmo/UZX8fs5HBR1Nc
-    iNgV8zUIxhMt2LHWIpB1ebuappeiguagy704KNeplMhMzvRcNRWrK1FlztHljhen
-    lfJ924fb5bQOEh3cOXOJBUgeq/X42KR/zd3Xfr5ObDaBBzKQD+vX181xax+4bm4L
-    kfxzSxtS+BymhFMWPAVWTsbWcEvqdGL6+hVPPuB7ki/FPEIXSI2x5u6nN+ov5wcl
-    IUAJUt5f2HNxfMw8AYXutFpzx8ZvaMzFDY+F2QIDAQABAoIBAEQ+wBiHhpCEJ3Xe
-    RAugrINj6CWqWKZx8Gt9QCTblbSiobCD0ipMhi1ftt+3vv1SbpVg9+G+PqOIX3gl
-    tXT/XK0jHptJhS/oeuozl3cEDSTmt1H62SEJ282WKb1GYebgTPnNJfheoGKGmkp3
-    ptjoVL27OrXD1bDJ+VLHVXg2XgjqdIa/Dc0UqFzMQLtJrYdD+PLlo/QPnpYwHsVs
-    IhdSaSAjITlV+dYzN6WA0W5qrJKYoBXtn1G7W7fZ53RkmEd60Gd8V5UYTbXUymlq
-    EzqJtnZFIgxGGsUFAjNiajfwTyJS8PPnEY1Hm0/3kjL04narxpN2G+Ku4YlYIA7M
-    iRdKUxUCgYEA4n7cxVcFniXr0jKXc4HIivVNDee+/HYoTMOu5P8qR1GsGdWd0ij9
-    BPOEtt33uTPYB1hXpODmx408j+rEyTDATVqGuOnlzh7F0ca1N94eE0U6snoqcrNi
-    644zBTE8C9hh6LIhnYtrFoLMO9Nw3YhJlPEshPF9jeyYvJ9GJd6XWusCgYEA5aVr
-    C/iJzAzevQ4VoNI1YV/kNMifQcxQ0YXEPkEwHB52JSOOHxoolwXWEy48cWmWQK5J
-    OxO31sG5UrI2xVV9vJXBMV/PVa0fnU92a+pytGAhossOFy0hGIjjBf8zmbPqQN7Q
-    mlbwDMlQw3oeOl3e6wkVoeYvMn3s8NHecvJo6UsCgYEAw69zspPi6KY+vpazPzqM
-    N3KEJlVpLtovK1ON0Y+byY6IsLFc72w2Xoa+zPetxbdDF+V9o5gkC5i9EGJ3rpOO
-    McbayvxabeEsbHfPrfsb5O5VLkpaTksqVfW/oubMyDclMFRmsqT32rUbGz0tMFlF
-    qYdNPXcfUPVvaNf7VVChWA0CgYEAro4hIxVE8KQrvnpxOC/wQVbZKMICQ8pg+BH8
-    i/GS9xy0YyB2i++fQMQ/545yhSZj/kA8C7q+N3BDRLeP6ElGbM1L7xLLj20rpbBb
-    7EVl8PNNPeeoizdTe8m4/rrv5voZqjtzRo2ko6N2T0+IoIbvxam/FrPX1kJfkuGD
-    e84ErqcCgYAj8cfoXNoUVOh4Q7mUpYe7OTYtgmWdEzYJuVajl22MF1oLKg80QRnj
-    nyHs9FltplPPCnKme5SQ7n1nYxhobCC+TlcZegNJ7qb3z9dyIka2KiXjfad39xeX
-    5wP9SZTwsQylokwc30Q1FOcQMTXQALvnVvowx8rFPLQBvFjxvfyEJA==
-    -----END RSA PRIVATE KEY-----
+  # root_ca.key: ""
