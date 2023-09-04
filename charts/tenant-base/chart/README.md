@@ -3,6 +3,8 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.12.2
+- Sets the PVC storageclassname to "". This enforces pvc's storageclasses to be the default storageclass on the cluster. This change does not affect tenants, however, if they want to use a PVC they must upgrade to this version.
 ### 0.12.1
 - Fixed bug that disallowed traffic through ingress. Ingress routes will not work until you upgrade to this version. No changes to values.yaml.
 ### 0.12.0
