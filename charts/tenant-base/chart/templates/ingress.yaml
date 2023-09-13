@@ -4,27 +4,25 @@
 {{- if .ingress }}
 {{- if .ingress.host }}
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: {{ $fullName }}
   namespace: {{ $.Release.Namespace }}
 spec:
-  ingressClassName: traefik
-  rules:
-    - host: {{ required "A valid ingress host is required" .ingress.host }}
-      http:
-        paths:
-        - backend:
-            service:
-              name: {{ required "A valid ingress serviceName is required" .ingress.serviceName }}
-              port:
-                number: {{ required "A valid ingress port is required" .ingress.port }}
-          path: /
-          pathType: Prefix
+  routes:
+    - kind: Rule
+      match: "Host(`{{ .ingress.host }}`) && Path(`/{{ required "An ingress path is required" .ingress.path }}`)"
+      services:
+        - namespace: {{ $.Release.Namespace }}
+          name: {{ .ingress.serviceName }}
+          port: {{ .ingress.port }}
+      {{- if .ingress.path }}
+      middlewares:
+        - name: stripprefix-{{ required "An ingress path is required" .ingress.path }}
+          namespace: {{ $.Release.Namespace }}
+      {{- end }}
   tls:
-  - hosts:
-    - {{ required "A valid ingress host is required" .ingress.host }}
     secretName: {{ required "A valid ingress secretName is required" .ingress.secretName }}
 {{- end -}}
 {{- end -}}

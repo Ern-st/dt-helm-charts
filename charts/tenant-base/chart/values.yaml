@@ -16,12 +16,12 @@ deployments:
 
     # The ports on the pod and the equal port on the service and their protocol.
     # An example of a port opening and service creation is shown as a comment.
-    ports: {}
-    #  - podPortName: http
-    #    podPort: 9898
-    #    servicePortName: http
-    #    servicePort: 80
-    #    protocol: TCP
+    ports: []
+      # - podPortName: http
+      #   podPort: 9898
+      #   servicePortName: http
+      #   servicePort: 80
+      #   protocol: TCP
 
     # To allow traffic between different pods in your namespace, you have to create ingress and egress rules.
     # See [this link](https://github.com/distributed-technologies/helm-charts/blob/main/charts/tenant-base/docs/deployment.md#networkpolicy) for more.
@@ -66,6 +66,11 @@ deployments:
     ingress:
       # This is the host name for the DNS record, example lfc.teamdt.net
       host: ""
+      # This is the path used to access your application. The URL will be <host>/<path>. Setting a path is required.
+      # This path is stripped when traffic is forwarded through the ingress controller to your pod. An example of this:
+      # If your path is "ui" and you access <host>/ui the traffic forwarded to your pod will have "/ui" stripped from it and traffic will be hitting "/".
+      # If you access <host>/ui/api the traffic forwarded to your pod will have "/ui" stripped from it and traffic will be hitting "/api".
+      path: ""
       # This is the name of the service you would like traffic routed to from the ingress controller
       serviceName: ""
       # This is the port of the service you would like traffic routed to from the ingress controller

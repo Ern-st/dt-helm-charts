@@ -1,0 +1,18 @@
+{{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
+{{- if .enabled }}
+{{- if .ingress }}
+{{- if .ingress.path }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix-{{ required "An ingress path is required" .ingress.path }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  stripPrefix:
+    prefixes:
+      - /{{ required "An ingress path is required" .ingress.path }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

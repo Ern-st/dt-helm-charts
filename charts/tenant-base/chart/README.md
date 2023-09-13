@@ -3,6 +3,8 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.12.3
+- Adds the `path` parameter to ingress so our tenants now can use paths when creating their ingress routes. This enables you to setup an ingress route to for example `lfc.preprod.ot.energinet.local/dashboard` rather than just `lfc.preprod.ot.energinet.local`.
 ### 0.12.2
 - Sets the PVC storageclassname to "". This enforces pvc's storageclasses to be the default storageclass on the cluster. This change does not affect tenants, however, if they want to use a PVC they must upgrade to this version.
 ### 0.12.1
@@ -87,6 +89,7 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.resources.cpu`       | The amount of cores reserved for your pod     | `100m`                                                  |
 | `deployments.podinfo.ingress`             | Setting ingress for your pod                  | `nil`                                                   |
 | `deployments.podinfo.ingress.host`        | Setting ingress host name for your pod        | `nil`                                                   |
+| `deployments.podinfo.ingress.path`        | Setting ingress path for your pod             | `nil`                                                   |
 | `deployments.podinfo.ingress.serviceName` | Setting service name target for ingress       | `nil`                                                   |
 | `deployments.podinfo.ingress.port`        | Setting service name target port for ingress  | `nil`                                                   |
 | `deployments.podinfo.ingress.secretName`  | Setting cert and key secret name              | `nil`                                                   |

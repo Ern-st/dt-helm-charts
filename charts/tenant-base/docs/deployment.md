@@ -180,6 +180,7 @@ Setting up ingress for your pod is an idea if you would like to send traffic to 
 ```yaml
     ingress:
       host: "podinfo.teamdt.net"
+      path: dashboard
       serviceName: "test-podinfo"
       port: 80
       secretName: "podinfo-tls"
@@ -210,4 +211,4 @@ Paste these two base64 encoding into the `data.tls.crt` and `data.tls.key` field
 ```yaml
 kubectl create -f <application-name>-tls-secret.yaml
 ```
-If you have filled in all the information correctly and applied it on the cluster, you should be able to access your pod on `https://podinfo.teamdt.net`.
+If you have filled in all the information correctly and applied it on the cluster, you should be able to access your pod on `https://podinfo.teamdt.net/dashboard`.
