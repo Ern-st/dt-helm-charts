@@ -28,8 +28,6 @@ spec:
         {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 8 }}
     spec:
       {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $fullName) | nindent 6 }}
-      imagePullSecrets:
-        - name: registry-token
       containers:
         - name: {{ $fullName }}
           securityContext:

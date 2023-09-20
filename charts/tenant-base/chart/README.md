@@ -3,6 +3,8 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.13.4
+- Removed default value for `ImagePullSecret` in deployments
 ### 0.12.3
 - Adds the `path` parameter to ingress so our tenants now can use paths when creating their ingress routes. This enables you to setup an ingress route to for example `lfc.preprod.ot.energinet.local/dashboard` rather than just `lfc.preprod.ot.energinet.local`.
 ### 0.12.2
