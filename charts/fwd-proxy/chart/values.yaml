@@ -20,6 +20,7 @@ registries:
   - "quay.io"
   - "gridopsingularity.azurecr.io"
   - "registry.k8s.io"
+  - "devfaeb.azurecr.io"
 
 gitRepositories:
   - "github.com"
