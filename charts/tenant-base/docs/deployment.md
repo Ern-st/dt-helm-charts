@@ -121,6 +121,17 @@ deployments:
 This example creates a deployment called `sender`. It creates a pod with an egress network policy that allows traffic on port 9898 with the protocol TCP to another pod in the same helm release. This deployment is called `receiver`. This `receiver` deployment will create a network policy for its pod to receive ingress traffic on the `http` port. We can see this defined as port 9898 with TCP as the protocol.
 When you allow egress traffic from a pod, you will automatically create a policy that allows for the egress pod to contact the kubernetes DNS server. This allows you to use a pod's service instead of contacting the pod directly. To find the DNS name for the service of the pod you are trying to contact, use: `<release-name>-<deployment-name>.<namespace>.svc.cluster.local:<servicePort>`. In this example, this would look like this: `test-receiver.tenant-testing.svc.cluster.local:80`. This is the endpoint you can use inside your pod `sender` to send traffic to your pod `receiver`.
 
+## allowEgressToFQDN
+You can allow egress to a FQDN outside the cluster by using `allowEgressToFQDN` in [values.yaml](../chart/values.yaml). An example can be seen here:
+```yaml
+deployments:
+  test:
+    allowEgressToFQDN:
+      - "google.dk"
+      - "*.microsoftonline.com"
+```
+Notice that wildcards can be used. When defining a FQDN to allow egress to, a firewall has to be opened. You should contact team Platform Services to do this.
+
 ## Config maps
 Config maps is a list that contains the config maps you would like to be mounted into the pod in the deployment as environment variables. Before you can mount a config map one has to be created on the cluster. See [config maps](configmap.md). In this example we mount a config map called `foobar` into our pod.
 ```yaml

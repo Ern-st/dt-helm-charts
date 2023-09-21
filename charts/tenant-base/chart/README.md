@@ -3,7 +3,9 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
-### 0.13.4
+### 0.12.5
+- Allows tenants to specify `allowEgressToFQDN` to allow egress to a FQDN outside the cluster. Wildcards can be used such as `*.microsoftonline.com`.
+### 0.12.4
 - Removed default value for `ImagePullSecret` in deployments
 ### 0.12.3
 - Adds the `path` parameter to ingress so our tenants now can use paths when creating their ingress routes. This enables you to setup an ingress route to for example `lfc.preprod.ot.energinet.local/dashboard` rather than just `lfc.preprod.ot.energinet.local`.
@@ -73,6 +75,7 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.networkPolicy.egress.ports` | A list of port names to allow egress traffic to | `nil`                                          |
 | `deployments.podinfo.networkPolicy.egress.ports.protocol` | The protocol for the egress traffic | `nil`                                             |
 | `deployments.podinfo.networkPolicy.egress.ports.port` | The port to allow egress traffic to | `nil`                                                 |
+| `deployments.podinfo.allowEgressToFQDN`   | A list of FQDNs to allow egress traffic to    | `[]`                                                    |
 | `deployments.podinfo.configMaps`          | A list of configmaps that should be mounted into the pod as environment variables | `[]`                |
 | `deployments.podinfo.configMaps.name`     | The name of the configmap to fetch            | `nil`                                                   |
 | `deployments.podinfo.persistentVolumeClaims` | A list of persistentVolumeClaims that should be mounted as folder on the main pod | `[]`             |

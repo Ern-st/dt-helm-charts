@@ -29,6 +29,10 @@ deployments:
       ingress: []
       egress: []
 
+    # Allow list for egress to external FQDN. This could for example be to use Azure AD with your application
+    allowEgressToFQDN: []
+      # - "*.microsoftonline.com"
+
     # A list of config maps that should be mounted into the main pod as environment variables
     configMaps:
       []

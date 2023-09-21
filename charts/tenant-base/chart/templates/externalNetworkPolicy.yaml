@@ -1,0 +1,31 @@
+{{- range $deploymentName, $val := .Values.deployments }}
+{{- $fullName := (printf "%s-%s" $.Release.Name $deploymentName) }}
+{{- if .enabled }}
+{{- if .allowEgressToFQDN }}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ $fullName }}
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+  {{- range .allowEgressToFQDN }}
+    - toFQDNs:
+        - matchPattern: "{{ . }}"
+  {{- end }}
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+{{- end }}
+{{- end }}
+{{- end }}
