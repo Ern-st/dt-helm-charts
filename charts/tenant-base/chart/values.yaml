@@ -92,6 +92,8 @@ deployments:
       #   tls.crt: ""
       #   tls.key: ""
       secretName: ""
+    # If credentials are needed in order to pull the container image, define the secret name containing the credentials in "imagePullSecret". For the sandbox-dev environment this secret is called "registry-token"
+    imagePullSecret: ""
 
 # The configMap allows for storage of non secret configurations.
 configMaps:

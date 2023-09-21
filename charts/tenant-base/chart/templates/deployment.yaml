@@ -28,6 +28,10 @@ spec:
         {{- include "chart.selectorLabels" (dict "name" $fullName) | nindent 8 }}
     spec:
       {{- include "chart.topologySpreadConstrains" (dict "root" $ "values" $val "name" $fullName) | nindent 6 }}
+      {{- if .imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .imagePullSecret }}
+      {{- end }}
       containers:
         - name: {{ $fullName }}
           securityContext:

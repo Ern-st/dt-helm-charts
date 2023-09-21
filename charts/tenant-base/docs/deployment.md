@@ -223,3 +223,6 @@ Paste these two base64 encoding into the `data.tls.crt` and `data.tls.key` field
 kubectl create -f <application-name>-tls-secret.yaml
 ```
 If you have filled in all the information correctly and applied it on the cluster, you should be able to access your pod on `https://podinfo.teamdt.net/dashboard`.
+
+## ImagePullSecret
+The name of a secret containing credentials for the container registry in which your container image is stored. For the sandbox-dev environment this secret is called `registry-token`.

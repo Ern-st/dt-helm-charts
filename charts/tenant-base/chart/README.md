@@ -3,6 +3,8 @@ The tenant base helm chart is a chart that give an easy all in one place to make
 
 ## Release Notes
 This section will describe the changes done in each helm chart release
+### 0.12.6
+- Defined imagePullSecret as an option for a deployment. Is used to refer to a secret name containing credentials for the container registry in which the container image is stored. Tenants using the sandbox-dev environment should use this in their `environments/sandbox-dev` folder when upgrading to this version.
 ### 0.12.5
 - Allows tenants to specify `allowEgressToFQDN` to allow egress to a FQDN outside the cluster. Wildcards can be used such as `*.microsoftonline.com`.
 ### 0.12.4
@@ -98,6 +100,7 @@ Kafka topics are a way to describe which topics you want to create and which top
 | `deployments.podinfo.ingress.serviceName` | Setting service name target for ingress       | `nil`                                                   |
 | `deployments.podinfo.ingress.port`        | Setting service name target port for ingress  | `nil`                                                   |
 | `deployments.podinfo.ingress.secretName`  | Setting cert and key secret name              | `nil`                                                   |
+| `deployments.podinfo.imagePullSecret`     | The secret name containing container registry credentials | `nil`                                       |
 | `configMaps`                              | A list of configmaps to be created            | `[]`                                                    |
 | `configMaps.name`                         | The name of the configmap you want to create  | `nil`                                                   |
 | `configMaps.content`                      | A dictionary of key-value pairs               | `nil`                                                   |
